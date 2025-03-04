@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donations - Nourishnet</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+  <!-- Using the practic.css for donations -->
+  <link rel="stylesheet" href="css/practice.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <section class="header">
+    <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="donations.html">Donations</a>
+      <a href="register.html">Register</a>
+      <a href="login.html">Login</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </section>
+
+  <div class="heading">Donations</div>
+
+  <section class="donations">
+    <h1 class="heading-title">Available Donations</h1>
+    <div class="box-container">
+      <!-- Each donation box now calls an order overlay function if the user is logged in -->
+      <div class="box">
+        <div class="image">
+          <img src="images/donation-1.png" alt="">
+        </div>
+        <h3>Vegetarian Meal Donation</h3>
+        <p>Fresh organic vegetarian meals available for community centers.</p>
+        <button class="btn" onclick="openOrderOverlay(1)">Request Donation</button>
+      </div>
+      <div class="box">
+        <div class="image">
+          <img src="images/donation-2.jpg" alt="">
+        </div>
+        <h3>Non-Vegetarian Meal Donation</h3>
+        <p>Nutritious non-veg meals for local shelters.</p>
+        <button class="btn" onclick="openOrderOverlay(2)">Request Donation</button>
+      </div>
+      <div class="box">
+        <div class="image">
+          <img src="images/donation-3.jpg" alt="">
+        </div>
+        <h3>Packaged Snacks Donation</h3>
+        <p>Assorted snacks for after-school programs.</p>
+        <button class="btn" onclick="openOrderOverlay(3)">Request Donation</button>
+      </div>
+    </div>
+    <!-- Section for past donation feedback (if any) -->
+    <section class="past-feedback">
+      <h2>Past Donation Feedback</h2>
+      <div id="feedback-list">
+        <!-- Feedback items loaded dynamically via feedback.js -->
+      </div>
+    </section>
+  </section>
+
+    <!-- Social Section -->
+    <section class="social-section">
+      <h2>Be part of our mission</h2>
+      <p>Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
+      </p>
+      <div class="social-icons">
+        <div class="social-item">
+          <i class="fab fa-facebook-f facebook-link"></i>
+          <a href="#" class="facebook-link">Facebook</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-twitter twitter-link"></i>
+          <a href="#" class="twitter-link">Twitter</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-instagram instagram-link"></i>
+          <a href="#" class="instagram-link">Instagram</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-linkedin-in linkedin-link"></i>
+          <a href="#" class="linkedin-link">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  
+  
+    <!-- FontAwesome CDN for Icons -->
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+  
+  
+  
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <h2 class="brand">NOURISH<span class="highlight">NET</span></h2>
+          <p>Connecting surplus food to those in need.</p>
+        </div>
+  
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Initiatives</a></li>
+            <li><a href="#">Partners</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+  
+        <div class="footer-links">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+            <li><a href="#">Refund & Cancellation Policy</a></li>
+          </ul>
+        </div>
+  
+        <div class="footer-contact">
+          <h3>GET IN TOUCH</h3>
+          <p>📧 <a href="mailto:support@nourishnet.org">Support@NourishNet.org</a></p>
+        </div>
+      </div>
+  
+      <div class="footer-bottom">
+        <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
+      </div>
+  
+    </footer>
+
+  <!-- Order Overlay (hidden by default) -->
+  <div id="order-overlay" class="overlay">
+    <!-- The content of order overlay is loaded from order.html via order.js or can be inline -->
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+  <script src="js/script.js"></script>
+  <script src="js/order.js"></script>
+  <script src="js/feedback.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

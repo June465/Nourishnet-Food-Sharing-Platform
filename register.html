@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Nourishnet</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/register.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg">
+</head>
+<body>
+  <!-- Header -->
+  <section class="header">
+    <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="donations.html">Donations</a>
+      <a href="register.html">Register</a>
+      <a href="login.html">Login</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </section>
+
+  <!-- Heading -->
+  <div class="heading" style="background:url(images/header-register.jpg) no-repeat">
+    <h1>REGISTER</h1>
+  </div>
+
+  <!-- Registration Section -->
+  <section class="registration">
+    <h1 class="heading-title">Create Your Account</h1>
+    <div class="registration-container">
+      <div class="registration-box">
+        <h2>Registration Details</h2>
+        <form id="register-form" action="/api/auth/register" method="post">
+          <div class="inputBox">
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Enter your name" required>
+          </div>
+          <div class="inputBox">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="inputBox">
+            <span>Contact (Phone or Email)</span>
+            <input type="text" name="contact" placeholder="Enter your contact" required>
+          </div>
+          <!-- Role selection: Collector or Distributor (user must choose one) -->
+          <div class="inputBox">
+            <span>Register As</span>
+            <select name="role" required>
+              <option value="">Select role</option>
+              <option value="collector">Collector</option>
+              <option value="distributor">Distributor</option>
+            </select>
+          </div>
+          <!-- Additional fields: for distributor, ask for food categories; for collector, ask for region & requirements -->
+          <div class="inputBox" id="additional-fields">
+            <!-- JS can dynamically show appropriate fields based on role selection -->
+          </div>
+          <div class="inputBox">
+            <span>Password</span>
+            <input type="password" name="password" placeholder="Enter password" required>
+          </div>
+          <input type="submit" value="Register" class="btn">
+        </form>
+        <!-- Message div to display registration success -->
+        <div id="register-message"></div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Social Section -->
+    <section class="social-section">
+      <h2>Be part of our mission</h2>
+      <p>Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
+      </p>
+      <div class="social-icons">
+        <div class="social-item">
+          <i class="fab fa-facebook-f facebook-link"></i>
+          <a href="#" class="facebook-link">Facebook</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-twitter twitter-link"></i>
+          <a href="#" class="twitter-link">Twitter</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-instagram instagram-link"></i>
+          <a href="#" class="instagram-link">Instagram</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-linkedin-in linkedin-link"></i>
+          <a href="#" class="linkedin-link">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  
+  
+    <!-- FontAwesome CDN for Icons -->
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+  
+  
+  
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <h2 class="brand">NOURISH<span class="highlight">NET</span></h2>
+          <p>Connecting surplus food to those in need.</p>
+        </div>
+  
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Initiatives</a></li>
+            <li><a href="#">Partners</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+  
+        <div class="footer-links">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+            <li><a href="#">Refund & Cancellation Policy</a></li>
+          </ul>
+        </div>
+  
+        <div class="footer-contact">
+          <h3>GET IN TOUCH</h3>
+          <p>📧 <a href="mailto:support@nourishnet.org">Support@NourishNet.org</a></p>
+        </div>
+      </div>
+  
+      <div class="footer-bottom">
+        <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
+      </div>
+  
+    </footer>
+
+  <!-- Scripts -->
+  <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Example: dynamically show additional fields based on role selection
+    const roleSelect = document.querySelector('select[name="role"]');
+    const additionalFields = document.getElementById('additional-fields');
+    roleSelect.addEventListener('change', function() {
+      if (this.value === 'distributor') {
+        additionalFields.innerHTML = `<span>Food Categories</span>
+          <input type="text" name="categories" placeholder="e.g., Fruits, Vegetables" required>`;
+      } else if (this.value === 'collector') {
+        additionalFields.innerHTML = `<span>Region of Operation</span>
+          <input type="text" name="region" placeholder="Enter your region" required>
+          <span>Food Requirements</span>
+          <input type="text" name="requirements" placeholder="Specify types or quantities" required>`;
+      } else {
+        additionalFields.innerHTML = '';
+      }
+    });
+
+    // Handle registration form submission via auth.js (AJAX/fetch)
+    document.getElementById('register-form').addEventListener('submit', registerUser);
+  </script>
+</body>
+</html>

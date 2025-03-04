@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nourishnet - Home</title>
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg">
+</head>
+<body>
+  <!-- Header -->
+  <section class="header">
+    <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="donations.html">Donations</a>
+      <!-- Merged registration link -->
+      <a href="register.html">Collector/Distributor Registration</a>
+      <a href="login.html">Login</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </section>
+
+  <!-- Home Slider -->
+  <section class="home">
+    <div class="swiper home-slider">
+      <div class="swiper-wrapper">
+        <!-- In slider links, redirect to login.html (for non-logged in users) -->
+        <div class="swiper-slide slide" style="background:url(images/food-slide-1.jpg) no-repeat">
+          <div class="content">
+            <span>Donate with Compassion</span>
+            <h3>Share your surplus, nourish a life</h3>
+            <a href="login.html" class="btn">explore donations</a>
+          </div>
+        </div>
+        <div class="swiper-slide slide" style="background:url(images/food-slide-2.webp) no-repeat">
+          <div class="content">
+            <span>Bridging Hunger & Hope</span>
+            <h3>Your food, their future</h3>
+            <a href="login.html" class="btn">view opportunities</a>
+          </div>
+        </div>
+        <div class="swiper-slide slide" style="background:url(images/food-slide-3.webp) no-repeat">
+          <div class="content">
+            <span>Every Meal Counts</span>
+            <h3>Empower communities with every donation</h3>
+            <a href="login.html" class="btn">join the cause</a>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </section>
+
+  <!-- Our Services -->
+  <section class="services">
+    <h1 class="heading-title">our services</h1>
+    <div class="box-container">
+      <div class="box">
+        <img src="images/icon-distributor.png" alt="">
+        <!-- Merged registration link -->
+        <a href="register.html"><h3>Collector/Distributor Registration</h3></a>
+      </div>
+      <div class="box">
+        <img src="images/icon-collector.png" alt="">
+        <a href="register.html"><h3>Collector/Distributor Registration</h3></a>
+      </div>
+      <div class="box">
+        <img src="images/icon-donation.png" alt="">
+        <a href="donations.html"><h3>Donation</h3></a>
+      </div>
+      <div class="box">
+        <img src="images/icon-feedback.png" alt="">
+        <!-- Opens a feedback overlay page -->
+        <a href="feedback.html"><h3>Feedbacks & Points</h3></a>
+      </div>
+      <div class="box">
+        <img src="images/icon-analytics.png" alt="">
+        <h3>Real-time Analytics</h3>
+      </div>
+      <div class="box">
+        <img src="images/icon-community.png" alt="">
+        <h3>Community Impact</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Home About -->
+  <section class="home-about">
+    <div class="image">
+      <img src="images/about-food.jpg" alt="">
+    </div>
+    <div class="content">
+      <h3>About Nourishnet</h3>
+      <p>
+        Nourishnet is a revolutionary platform connecting food donors and collectors to ensure no edible food goes to waste...
+      </p>
+      <a href="about.html" class="btn">read more</a>
+    </div>
+  </section>
+
+  <!-- Home Offer -->
+  <section class="home-offer">
+    <div class="content">
+      <h3>Join our mission</h3>
+      <p>
+        Be a part of a transformative journey where your surplus food can change lives. Sign up today and start making a difference!
+      </p>
+      <a href="register.html" class="btn">get started</a>
+    </div>
+  </section>
+
+    <!-- Social Section -->
+    <section class="social-section">
+      <h2>Be part of our mission</h2>
+      <p>Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
+      </p>
+      <div class="social-icons">
+        <div class="social-item">
+          <i class="fab fa-facebook-f facebook-link"></i>
+          <a href="#" class="facebook-link">Facebook</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-twitter twitter-link"></i>
+          <a href="#" class="twitter-link">Twitter</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-instagram instagram-link"></i>
+          <a href="#" class="instagram-link">Instagram</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-linkedin-in linkedin-link"></i>
+          <a href="#" class="linkedin-link">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  
+  
+    <!-- FontAwesome CDN for Icons -->
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+  
+  
+  
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <h2 class="brand">NOURISH<span class="highlight">NET</span></h2>
+          <p>Connecting surplus food to those in need.</p>
+        </div>
+  
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Initiatives</a></li>
+            <li><a href="#">Partners</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+  
+        <div class="footer-links">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+            <li><a href="#">Refund & Cancellation Policy</a></li>
+          </ul>
+        </div>
+  
+        <div class="footer-contact">
+          <h3>GET IN TOUCH</h3>
+          <p>📧 <a href="mailto:support@nourishnet.org">Support@NourishNet.org</a></p>
+        </div>
+      </div>
+  
+      <div class="footer-bottom">
+        <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
+      </div>
+  
+    </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/script.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Place Order - Nourishnet</title>
+  <link rel="stylesheet" href="css/order.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg">
+</head>
+<body>
+  <!-- This overlay modal can also be injected into other pages via JS -->
+  <div class="order-overlay">
+    <div class="order-modal">
+      <span class="close-btn" onclick="closeOrderOverlay()">&times;</span>
+      <h2>Place Your Order</h2>
+      <form id="order-form" onsubmit="submitOrder(event)">
+        <div class="inputBox">
+          <span>Item Count</span>
+          <input type="number" name="itemCount" placeholder="Enter quantity needed" required>
+        </div>
+        <!-- Display other order details (populated dynamically) -->
+        <div id="order-details">
+          <!-- e.g., servings, pickup time, location, use-by date -->
+        </div>
+        <input type="submit" value="Submit Order" class="btn">
+      </form>
+      <div id="order-summary" class="hidden">
+        <!-- Summary and thank you message will appear here -->
+      </div>
+    </div>
+  </div>
+  <script src="js/order.js"></script>
+</body>
+</html>

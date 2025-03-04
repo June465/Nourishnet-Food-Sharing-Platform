@@ -1,0 +1,23 @@
+/* Feedback overlay styling – follows similar fonts, padding, and margins as existing pages */
+body {
+    background: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+  }
+  .feedback-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  #feedback-items {
+    margin-top: 2rem;
+  }
+  .feedback-item {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
