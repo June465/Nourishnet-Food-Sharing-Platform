@@ -1,10 +1,13 @@
-const User = require('../models/User');
+const db = require('../firebase');
 
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user)
+    const doc = await db.collection('users').doc(req.params.id).get();
+    if (!doc.exists) {
       return res.status(404).json({ success: false, message: "User not found" });
+    }
+    let user = doc.data();
+    user.id = doc.id;
     res.json({ success: true, user });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -13,12 +16,11 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    res.json({ success: true, user: updatedUser });
+    await db.collection('users').doc(req.params.id).update(req.body);
+    const doc = await db.collection('users').doc(req.params.id).get();
+    let user = doc.data();
+    user.id = doc.id;
+    res.json({ success: true, user });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -26,7 +28,13 @@ exports.updateUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const snapshot = await db.collection('users').get();
+    let users = [];
+    snapshot.forEach(doc => {
+      let user = doc.data();
+      user.id = doc.id;
+      users.push(user);
+    });
     res.json({ success: true, users });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
