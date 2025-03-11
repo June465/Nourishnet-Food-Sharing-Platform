@@ -16,5 +16,8 @@
     "url": "https://github.com/June465/Nourishnet-Food-Sharing-Platform/issues"
   },
   "homepage": "https://github.com/June465/Nourishnet-Food-Sharing-Platform#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "firebase-admin": "^13.2.0"
+  }
 }
