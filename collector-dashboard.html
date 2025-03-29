@@ -30,19 +30,25 @@
     </section>
 
     <!-- Heading -->
-    <!-- Changed background image to header-food.jpg (an image that exists) -->
-    <div class="heading" style="background:url(images/header-food.jpg) no-repeat">
+    <!-- Use an existing image for the header -->
+    <div class="heading" style="background: url(images/header-food.jpg) no-repeat center/cover">
       <h1>Collector Dashboard</h1>
     </div>
 
     <!-- Dashboard Section -->
     <section class="dashboard">
       <div class="dashboard-container">
-        <!-- Donations List in a 3xn grid -->
+        <!-- Donations List -->
         <div class="donations-list">
           <h2>Available Food Donations</h2>
           <div class="grid-container">
-              <!-- Pass donation ID as a string -->
+            <!-- For demonstration, a static donation card -->
+            <div class="donation-card" id="donation-card-1">
+              <img src="images/donation-1.png" alt="" />
+              <h3>Vegetarian Meal</h3>
+              <p>
+                <span class="donation-quantity">50</span> servings | Downtown
+              </p>
               <button class="btn" onclick="openOrderOverlay('1')">Request Donation</button>
             </div>
           </div>
@@ -51,17 +57,16 @@
         <div class="prior-orders">
           <h2>Your Prior Orders</h2>
           <div id="order-history">
-            
-            <!-- If no orders exist, display a message like: "No orders yet!" -->
+            <!-- Sample order card or message if no orders exist -->
+            <p>No orders yet!</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Add the missing overlay container for orders -->
+    <!-- Order Overlay Container -->
     <div id="order-overlay" class="overlay" style="display: none;"></div>
-
-    <!-- Feedback Detail Overlay for Collector (hidden by default) -->
+    <!-- Feedback Detail Overlay for Collector -->
     <div id="collector-feedback-modal" class="overlay" style="display: none;"></div>
 
     <!-- Social Section -->
@@ -125,12 +130,9 @@
       </div>
     </footer>
 
-    <!-- FontAwesome CDN for Icons -->
-    <!-- Replace YOUR_FONT_AWESOME_KIT with your actual kit code or remove if not needed -->
+    <!-- Include required scripts -->
     <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
-    <!-- Include Swiper JS so that Swiper is defined before script.js runs -->
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-    <!-- Include your custom scripts -->
     <script src="js/script.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/order.js"></script>
