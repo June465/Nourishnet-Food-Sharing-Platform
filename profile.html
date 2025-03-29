@@ -1,48 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your Profile - Nourishnet</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg">
-</head>
-<body>
-  <section class="header">
-    <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
-    <nav class="navbar" id="profile-navbar">
-      <!-- Profile dropdown populated by auth.js -->
-      <a href="profile.html">Profile</a>
-      <a href="#" onclick="logoutUser()">Logout</a>
-    </nav>
-    <div id="menu-btn" class="fas fa-bars"></div>
-  </section>
-  
-  <div class="profile-container">
-    <h1>Welcome, <span id="username-display"></span></h1>
-    <p>You are logged in as a <span id="user-role"></span>.</p>
-    <!-- Additional profile info can go here -->
-  </div>
-  
-    <!-- Footer Section -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Your Profile - NourishNet</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
+  </head>
+  <body>
+    <!-- Header -->
+    <section class="header">
+      <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
+      <nav class="navbar">
+        <!-- These links are replaced by auth.js if user is logged in -->
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="donations.html">Donations</a>
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+      </nav>
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </section>
+
+    <div class="profile-container">
+      <h1>Welcome, <span id="username-display"></span></h1>
+      <p>You are logged in as a <span id="user-role"></span>.</p>
+
+      <!-- User Details -->
+      <div id="user-details" class="user-details">
+        <p><strong>Name:</strong> <span id="detail-name"></span></p>
+        <p><strong>Email:</strong> <span id="detail-email"></span></p>
+        <p><strong>Contact:</strong> <span id="detail-contact"></span></p>
+        <p><strong>Role:</strong> <span id="detail-role"></span></p>
+        <p><strong>Categories (if distributor):</strong> <span id="detail-categories"></span></p>
+        <p><strong>Region (if collector):</strong> <span id="detail-region"></span></p>
+        <p><strong>Requirements (if collector):</strong> <span id="detail-requirements"></span></p>
+      </div>
+
+      <button class="btn" id="edit-profile-btn" onclick="toggleEditProfile()">Edit Profile</button>
+
+      <!-- Edit Profile Form -->
+      <div id="edit-profile-form" class="edit-profile" style="display: none;">
+        <h2>Edit Profile</h2>
+        <form onsubmit="submitProfileEdits(event)">
+          <div class="inputBox">
+            <label>Name</label>
+            <input type="text" id="edit-name" />
+          </div>
+          <div class="inputBox">
+            <label>Email</label>
+            <input type="email" id="edit-email" />
+          </div>
+          <div class="inputBox">
+            <label>Contact</label>
+            <input type="text" id="edit-contact" />
+          </div>
+          <!-- Distributor-only fields -->
+          <div class="inputBox distributor-only" style="display: none;">
+            <label>Categories</label>
+            <input type="text" id="edit-categories" />
+          </div>
+          <!-- Collector-only fields -->
+          <div class="inputBox collector-only" style="display: none;">
+            <label>Region</label>
+            <input type="text" id="edit-region" />
+          </div>
+          <div class="inputBox collector-only" style="display: none;">
+            <label>Requirements</label>
+            <input type="text" id="edit-requirements" />
+          </div>
+          <button type="submit" class="btn">Save Changes</button>
+          <button type="button" class="btn" onclick="toggleEditProfile()">Cancel</button>
+        </form>
+      </div>
+
+      <hr />
+
+      <!-- Change Password Section -->
+      <div class="change-password-section">
+        <h2>Change Password</h2>
+        <form onsubmit="changePassword(event)">
+          <div class="inputBox">
+            <label>Old Password</label>
+            <input type="password" id="old-password" required />
+          </div>
+          <div class="inputBox">
+            <label>New Password</label>
+            <input type="password" id="new-password" required />
+          </div>
+          <div class="inputBox">
+            <label>Confirm New Password</label>
+            <input type="password" id="confirm-new-password" required />
+          </div>
+          <button type="submit" class="btn">Update Password</button>
+        </form>
+        <p>Forgot password? <a href="forgot-password.html">Click here</a></p>
+      </div>
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-left">
           <h2 class="brand">NOURISH<span class="highlight">NET</span></h2>
           <p>Connecting surplus food to those in need.</p>
         </div>
-  
         <div class="footer-links">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
             <li><a href="#">Initiatives</a></li>
             <li><a href="#">Partners</a></li>
             <li><a href="#">Contact</a></li>
           </ul>
         </div>
-  
         <div class="footer-links">
           <h3>Legal</h3>
           <ul>
@@ -51,19 +123,17 @@
             <li><a href="#">Refund & Cancellation Policy</a></li>
           </ul>
         </div>
-  
         <div class="footer-contact">
           <h3>GET IN TOUCH</h3>
           <p>📧 <a href="mailto:support@nourishnet.org">Support@NourishNet.org</a></p>
         </div>
       </div>
-  
       <div class="footer-bottom">
         <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
       </div>
-  
     </footer>
-  
-  <script src="js/auth.js"></script>
-</body>
+
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+  </body>
 </html>

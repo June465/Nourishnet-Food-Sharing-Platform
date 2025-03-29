@@ -1,41 +1,77 @@
-const db = require('../firebase');
+const User = require('../models/User');
 
-// REGISTER: Save new user to Firestore (in 'users' collection)
+// REGISTER: Save new user to MongoDB
 exports.register = async (req, res) => {
   try {
     const { name, email, contact, role, password, categories, region, requirements } = req.body;
-    const usersRef = db.collection('users');
-    const snapshot = await usersRef.where('email', '==', email).get();
-    if (!snapshot.empty) {
-      return res.json({ success: false, message: "User already exists." });
+    // Check if user exists (by email)
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.json({ success: false, message: 'User already exists.' });
     }
-    const newUser = { name, email, contact, role, password, categories, region, requirements, createdAt: new Date() };
-    const docRef = await usersRef.add(newUser);
-    newUser.id = docRef.id;
-    res.json({ success: true, message: `Registered as ${role}`, user: newUser });
+    const newUser = new User({
+      name,
+      email,
+      contact,
+      role,
+      password, // In production, hash passwords before saving!
+      categories,
+      region,
+      requirements,
+      createdAt: new Date(),
+    });
+    const savedUser = await newUser.save();
+    res.json({ success: true, message: `Registered as ${role}`, user: savedUser });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
 
-// LOGIN: Verify user credentials from Firestore
+// LOGIN: Verify user credentials
 exports.login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
-    const usersRef = db.collection('users');
-    let snapshot = await usersRef.where('email', '==', identifier).where('password', '==', password).get();
-    if (snapshot.empty) {
-      // Try matching by contact
-      snapshot = await usersRef.where('contact', '==', identifier).where('password', '==', password).get();
-      if (snapshot.empty) {
-        return res.json({ success: false, message: "Invalid credentials" });
+    // Try to find user by email
+    let user = await User.findOne({ email: identifier, password });
+    if (!user) {
+      // If not, try by contact
+      user = await User.findOne({ contact: identifier, password });
+      if (!user) {
+        return res.json({ success: false, message: 'Invalid credentials' });
       }
     }
-    const userDoc = snapshot.docs[0];
-    const user = userDoc.data();
-    user.id = userDoc.id;
     res.json({ success: true, user });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+exports.changePassword = async (req, res) => {
+  try {
+    const { userId, oldPassword, newPassword } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.json({ success: false, message: 'User not found.' });
+    }
+
+    // Check old password
+    if (user.password !== oldPassword) {
+      // In production, you'd store a hashed password and compare properly
+      return res.json({ success: false, message: 'Old password is incorrect.' });
+    }
+
+    // Update to new password
+    user.password = newPassword; // Again, you'd hash in real code
+    await user.save();
+
+    res.json({ success: true, message: 'Password updated successfully.' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+// In backend/controllers/authController.js
+
+exports.forgotPassword = async (req, res) => {
+  res.status(501).json({ success: false, message: "Forgot password functionality not implemented yet." });
+};
+

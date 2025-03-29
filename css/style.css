@@ -475,6 +475,15 @@ p {
   background: var(--main-color);
 }
 
+.profile-container {
+  display: block;
+  font-size: 1.6rem;
+  margin: 300px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  padding-left: 100px;
+}
+
 /* Feedback Section */
 .feedback-section form .inputBox {
   margin: 1rem 0;
@@ -508,9 +517,6 @@ p {
   color: white;
   padding: 40px 0;
   text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }
 
 .footer-container {
@@ -579,7 +585,6 @@ p {
   text-decoration: none;
   display: inline-block;
 }
-
 
 /* Responsive */
 @media (max-width: 991px) {

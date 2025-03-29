@@ -1,102 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Distributor Dashboard - Nourishnet</title>
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <!-- Header (Dashboard Navigation) -->
-  <section class="header">
-    <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="donations.html">Donations</a>
-      <!-- The nav now will show a profile dropdown if logged in (handled in auth.js) -->
-      <a href="profile.html">Profile</a>
-    </nav>
-    <div id="menu-btn" class="fas fa-bars"></div>
-  </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Distributor Dashboard - NourishNet</title>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Header (Dashboard Navigation) -->
+    <section class="header">
+      <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
+      <nav class="navbar">
+        <!-- This navbar is replaced by auth.js if user is logged in -->
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="donations.html">Donations</a>
+        <a href="distributor-dashboard.html">Dashboard</a>
+        <a href="login.html">Login</a>
+      </nav>
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </section>
 
-  <!-- Heading -->
-  <div class="heading" style="background:url(images/header-dashboard.jpg) no-repeat">
-    <h1>Distributor Dashboard</h1>
-  </div>
-
-  <!-- Dashboard Section -->
-  <section class="dashboard">
-    <div class="dashboard-container">
-      <!-- Log Food Donation Form -->
-      <div class="form-section">
-        <h2>Log Food Donation</h2>
-        <form id="donation-form" action="/api/donations/add" method="post" enctype="multipart/form-data">
-          <div class="inputBox">
-            <span>Food Type</span>
-            <select name="foodType" required>
-              <option value="">Select type</option>
-              <option value="veg">Vegetarian</option>
-              <option value="nonveg">Non-Vegetarian</option>
-            </select>
-          </div>
-          <div class="inputBox">
-            <span>Allergy Information</span>
-            <input type="text" name="allergy" placeholder="e.g., Nuts, Dairy, Gluten" required>
-          </div>
-          <div class="inputBox">
-            <span>Quantity (servings)</span>
-            <input type="number" name="quantity" placeholder="Enter quantity" required>
-          </div>
-          <div class="inputBox">
-            <span>Location</span>
-            <input type="text" name="location" placeholder="Enter pickup location" required>
-          </div>
-          <div class="inputBox">
-            <span>Pickup Timing</span>
-            <input type="text" name="pickupTime" placeholder="e.g., 10:00 AM - 2:00 PM" required>
-          </div>
-          <div class="inputBox">
-            <span>Use-By Date & Time</span>
-            <input type="datetime-local" name="useBy" required>
-          </div>
-          <div class="inputBox">
-            <span>Upload Food Image</span>
-            <input type="file" name="foodImage" accept="image/*" required>
-          </div>
-          <input type="submit" value="Log Donation" class="btn">
-        </form>
-      </div>
-
-      <!-- Active Donations & Prior Deliveries -->
-      <div class="info-section">
-        <h2>Active Donations & Order History</h2>
-        <div class="active-donations">
-          <h3>Active Donations</h3>
-          <div id="active-donations-list">
-            <!-- Active donations loaded dynamically -->
-          </div>
-        </div>
-        <div class="prior-deliveries">
-          <h3>Prior Deliveries & Feedback</h3>
-          <div id="delivery-history">
-            <!-- History table; if empty show "No deliveries yet!" -->
-          </div>
-        </div>
-      </div>
+    <!-- Heading -->
+    <div class="heading" style="background:url(images/header-dashboard.jpg) no-repeat">
+      <h1>Distributor Dashboard</h1>
     </div>
-  </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard">
+      <div class="dashboard-container">
+        <!-- Log Food Donation Form -->
+        <div class="form-section">
+          <h2>Log Food Donation</h2>
+          <!-- Remove action="/api/donations/add" so we can handle it via fetch -->
+          <form id="donation-form" enctype="multipart/form-data">
+            <div class="inputBox">
+              <span>Food Type</span>
+              <select name="foodType" required>
+                <option value="">Select type</option>
+                <option value="veg">Vegetarian</option>
+                <option value="nonveg">Non-Vegetarian</option>
+              </select>
+            </div>
+            <div class="inputBox">
+              <span>Allergy Information</span>
+              <input type="text" name="allergy" placeholder="e.g., Nuts, Dairy, Gluten" required />
+            </div>
+            <div class="inputBox">
+              <span>Quantity (servings)</span>
+              <input type="number" name="quantity" placeholder="Enter quantity" required />
+            </div>
+            <div class="inputBox">
+              <span>Location</span>
+              <input type="text" name="location" placeholder="Enter pickup location" required />
+            </div>
+            <div class="inputBox">
+              <span>Pickup Timing</span>
+              <input type="text" name="pickupTime" placeholder="e.g., 10:00 AM - 2:00 PM" required />
+            </div>
+            <div class="inputBox">
+              <span>Use-By Date & Time</span>
+              <input type="datetime-local" name="useBy" required />
+            </div>
+            <div class="inputBox">
+              <span>Upload Food Image</span>
+              <input type="file" name="foodImage" accept="image/*" required />
+            </div>
+
+            <!-- We'll dynamically add a hidden "distributor" field in JS -->
+            <input type="submit" value="Log Donation" class="btn" />
+          </form>
+        </div>
+
+        <!-- Active Donations & Prior Deliveries Section -->
+        <div class="info-section">
+          <h2>Active Donations & Order History</h2>
+          <div class="active-donations">
+            <h3>Active Donations</h3>
+            <div id="active-donations-list">
+              <!-- We’ll load active donations dynamically via JS -->
+            </div>
+          </div>
+          <div class="prior-deliveries">
+            <h3>Prior Deliveries & Feedback</h3>
+            <div id="delivery-history">
+              <!-- We’ll also load order history dynamically if needed -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Detail Overlay for Distributor (hidden by default) -->
+    <div id="feedback-detail-modal" class="overlay" style="display: none;"></div>
 
     <!-- Social Section -->
     <section class="social-section">
       <h2>Be part of our mission</h2>
-      <p>Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
+      <p>
+        Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
       </p>
       <div class="social-icons">
         <div class="social-item">
@@ -117,13 +128,10 @@
         </div>
       </div>
     </section>
-  
-  
+
     <!-- FontAwesome CDN for Icons -->
     <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
-  
-  
-  
+
     <!-- Footer Section -->
     <footer class="footer">
       <div class="footer-container">
@@ -131,7 +139,6 @@
           <h2 class="brand">NOURISH<span class="highlight">NET</span></h2>
           <p>Connecting surplus food to those in need.</p>
         </div>
-  
         <div class="footer-links">
           <h3>Quick Links</h3>
           <ul>
@@ -142,7 +149,6 @@
             <li><a href="#">Contact</a></li>
           </ul>
         </div>
-  
         <div class="footer-links">
           <h3>Legal</h3>
           <ul>
@@ -151,21 +157,101 @@
             <li><a href="#">Refund & Cancellation Policy</a></li>
           </ul>
         </div>
-  
         <div class="footer-contact">
           <h3>GET IN TOUCH</h3>
           <p>📧 <a href="mailto:support@nourishnet.org">Support@NourishNet.org</a></p>
         </div>
       </div>
-  
       <div class="footer-bottom">
         <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
       </div>
-  
     </footer>
 
-  <script src="js/script.js"></script>
-  <script src="js/auth.js"></script>
-  <!-- Additional JS for dashboard functions can be added -->
-</body>
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      // On DOM load, add a hidden "distributor" field and handle submission via fetch
+      document.addEventListener('DOMContentLoaded', () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        // If not a distributor, redirect or do nothing
+        if (!user || user.role !== 'distributor') {
+          // In a real app, you might redirect to login
+          return;
+        }
+
+        const donationForm = document.getElementById('donation-form');
+
+        // Add a hidden input for the distributor ID
+        const distributorHidden = document.createElement('input');
+        distributorHidden.type = 'hidden';
+        distributorHidden.name = 'distributor';
+        distributorHidden.value = user._id || user.id; // Mongoose often returns _id
+        donationForm.appendChild(distributorHidden);
+
+        // Submit via fetch so we don't see the raw JSON
+        donationForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(donationForm);
+          try {
+            const response = await fetch('/api/donations/add', {
+              method: 'POST',
+              body: formData
+            });
+            const data = await response.json();
+            if (data.success) {
+              alert('Donation added successfully!');
+              // Reload the active donations
+              loadActiveDonations(user._id || user.id);
+            } else {
+              alert('Error: ' + data.message);
+            }
+          } catch (err) {
+            console.error(err);
+            alert('An error occurred while adding the donation.');
+          }
+        });
+
+        // On page load, also fetch the existing active donations
+        loadActiveDonations(user._id || user.id);
+      });
+
+      async function loadActiveDonations(distributorId) {
+        try {
+          const res = await fetch('/api/dashboard/distributor/' + distributorId);
+          const data = await res.json();
+          if (data.success) {
+            const container = document.getElementById('active-donations-list');
+            container.innerHTML = '';
+            data.activeDonations.forEach((donation) => {
+              const card = document.createElement('div');
+              card.classList.add('donation-card');
+              card.innerHTML = `
+                <p><strong>Donation #${donation._id}:</strong> ${donation.foodType} Donation</p>
+                <p>Quantity: ${donation.quantity} servings</p>
+                <button class="edit-btn" onclick="openEditDonationOverlay('${donation._id}')">Edit Donation</button>
+              `;
+              container.appendChild(card);
+            });
+
+            // If you also want to load prior deliveries:
+            const deliveryContainer = document.getElementById('delivery-history');
+            deliveryContainer.innerHTML = '';
+            data.orderHistory.forEach((order) => {
+              const div = document.createElement('div');
+              div.classList.add('delivery-card');
+              div.innerHTML = `
+                <p><strong>Delivery #${order._id}</strong></p>
+                <p>Donation ID: ${order.donationId}</p>
+                <p>Collector ID: ${order.collector}</p>
+              `;
+              deliveryContainer.appendChild(div);
+            });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    </script>
+  </body>
 </html>

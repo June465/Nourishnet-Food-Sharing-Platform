@@ -1,68 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Collector Dashboard - Nourishnet</title>
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <!-- Header (Dashboard Navigation) -->
-  <section class="header">
-    <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
-    <nav class="navbar">
-      <a href="collector-dashboard.html">Dashboard</a>
-      <a href="collector-history.html">History</a>
-      <a href="profile.html">Profile</a>
-      <a href="logout.html">Logout</a>
-    </nav>
-    <div id="menu-btn" class="fas fa-bars"></div>
-  </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collector Dashboard - NourishNet</title>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
+  </head>
+  <body>
+    <!-- Header (Dashboard Navigation) -->
+    <section class="header">
+      <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
+      <nav class="navbar">
+        <!-- Navbar will be updated by js/auth.js on DOMContentLoaded -->
+        <!-- Fallback links for logged-out users -->
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="donations.html">Donations</a>
+        <a href="collector-dashboard.html">Dashboard</a>
+        <a href="login.html">Login</a>
+      </nav>
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </section>
 
-  <!-- Heading -->
-  <div class="heading" style="background:url(images/header-dashboard.jpg) no-repeat">
-    <h1>Collector Dashboard</h1>
-  </div>
-
-  <!-- Dashboard Section -->
-  <section class="dashboard">
-    <div class="dashboard-container">
-      <!-- Donations List in a 3xn grid -->
-      <div class="donations-list">
-        <h2>Available Food Donations</h2>
-        <div class="grid-container">
-          <!-- Each donation card -->
-          <div class="donation-card">
-            <img src="images/donation-1.png" alt="">
-            <h3>Vegetarian Meal</h3>
-            <p>50 servings | Downtown</p>
-            <button class="btn" onclick="openOrderOverlay(1)">Request Donation</button>
-          </div>
-          <!-- More donation cards ... -->
-        </div>
-      </div>
-      <!-- Prior Orders Section -->
-      <div class="prior-orders">
-        <h2>Your Prior Orders</h2>
-        <div id="order-history">
-          <!-- If none, display: "No orders yet!" -->
-        </div>
-        <!-- If there is an order, allow feedback submission (only once per order) -->
-      </div>
+    <!-- Heading -->
+    <!-- Changed background image to header-food.jpg (an image that exists) -->
+    <div class="heading" style="background:url(images/header-food.jpg) no-repeat">
+      <h1>Collector Dashboard</h1>
     </div>
-  </section>
 
-  <!-- Social Section -->
+    <!-- Dashboard Section -->
+    <section class="dashboard">
+      <div class="dashboard-container">
+        <!-- Donations List in a 3xn grid -->
+        <div class="donations-list">
+          <h2>Available Food Donations</h2>
+          <div class="grid-container">
+              <!-- Pass donation ID as a string -->
+              <button class="btn" onclick="openOrderOverlay('1')">Request Donation</button>
+            </div>
+          </div>
+        </div>
+        <!-- Prior Orders Section -->
+        <div class="prior-orders">
+          <h2>Your Prior Orders</h2>
+          <div id="order-history">
+            
+            <!-- If no orders exist, display a message like: "No orders yet!" -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add the missing overlay container for orders -->
+    <div id="order-overlay" class="overlay" style="display: none;"></div>
+
+    <!-- Feedback Detail Overlay for Collector (hidden by default) -->
+    <div id="collector-feedback-modal" class="overlay" style="display: none;"></div>
+
     <!-- Social Section -->
     <section class="social-section">
       <h2>Be part of our mission</h2>
-      <p>Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
+      <p>
+        Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
       </p>
       <div class="social-icons">
         <div class="social-item">
@@ -83,13 +89,7 @@
         </div>
       </div>
     </section>
-  
-  
-    <!-- FontAwesome CDN for Icons -->
-    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
-  
-  
-  
+
     <!-- Footer Section -->
     <footer class="footer">
       <div class="footer-container">
@@ -97,18 +97,16 @@
           <h2 class="brand">NOURISH<span class="highlight">NET</span></h2>
           <p>Connecting surplus food to those in need.</p>
         </div>
-  
         <div class="footer-links">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
             <li><a href="#">Initiatives</a></li>
             <li><a href="#">Partners</a></li>
             <li><a href="#">Contact</a></li>
           </ul>
         </div>
-  
         <div class="footer-links">
           <h3>Legal</h3>
           <ul>
@@ -117,21 +115,26 @@
             <li><a href="#">Refund & Cancellation Policy</a></li>
           </ul>
         </div>
-  
         <div class="footer-contact">
           <h3>GET IN TOUCH</h3>
           <p>📧 <a href="mailto:support@nourishnet.org">Support@NourishNet.org</a></p>
         </div>
       </div>
-  
       <div class="footer-bottom">
         <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
       </div>
-  
     </footer>
 
-  <script src="js/script.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/order.js"></script>
-</body>
+    <!-- FontAwesome CDN for Icons -->
+    <!-- Replace YOUR_FONT_AWESOME_KIT with your actual kit code or remove if not needed -->
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+    <!-- Include Swiper JS so that Swiper is defined before script.js runs -->
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <!-- Include your custom scripts -->
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/order.js"></script>
+    <script src="js/feedback.js"></script>
+    <script src="js/overlay.js"></script>
+  </body>
 </html>
