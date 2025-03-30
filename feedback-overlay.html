@@ -1,26 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Feedbacks & Points - NourishNet</title>
-    <link rel="stylesheet" href="css/feedback.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
-  </head>
-  <body>
-    <div class="feedback-container">
-      <h1>Feedbacks & Points</h1>
-      <div id="feedback-items">
-        <!-- Feedback entries will be loaded dynamically via feedback.js -->
-      </div>
-      <button class="btn" onclick="closeFeedbackOverlay()">Close</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NourishNet Feedbacks</title>
+    <link rel="stylesheet" href="css/feedback.css"> <!-- Link new CSS -->
+    <link rel="stylesheet" href="css/style.css"> <!-- Link base style for .btn -->
+    <!-- Add Font Awesome if needed for icons inside feedback items -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+    <div class="feedback-overlay-content">
+        <span class="close-btn" onclick="closeFeedbackOverlay()">&times;</span>
+        <h2>User Feedbacks</h2>
+        <div class="feedback-scroll-container">
+             <div id="feedback-items">
+                <!-- Feedback entries will be loaded dynamically -->
+                <p>Loading feedbacks...</p>
+            </div>
+        </div>
+        <button class="btn close-btn-bottom" onclick="closeFeedbackOverlay()">Close</button>
     </div>
-    <script src="js/feedback.js"></script>
+
     <script>
-      function closeFeedbackOverlay() {
-        document.getElementById('feedback-overlay').style.display = 'none';
-      }
+        // Load feedback when overlay content is inserted
+        document.addEventListener('DOMContentLoaded', loadAllFeedbacks);
+
+        async function loadAllFeedbacks() {
+            const feedbackContainer = document.getElementById('feedback-items');
+            if (!feedbackContainer) return;
+
+            try {
+                const response = await fetch('/api/feedback/all');
+                const data = await response.json();
+
+                if (data.feedbacks && data.feedbacks.length > 0) {
+                    let html = '';
+                    // Sort feedbacks by newest first (optional)
+                    data.feedbacks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                    data.feedbacks.forEach(item => {
+                         // Fetch collector name (optional, adds complexity) - Assuming you store collectorId
+                         // let collectorName = item.collectorId ? await getCollectorName(item.collectorId) : 'Anonymous Collector';
+                        html += `
+                            <div class="feedback-item">
+                                <div class="feedback-header">
+                                    <span class="feedback-user">Feedback from Collector</span> <!-- Placeholder, enhance if needed -->
+                                    <span class="feedback-rating"> ${generateStars(item.rating)} </span>
+                                </div>
+                                <p class="feedback-comment">${item.comment}</p>
+                                <span class="feedback-timestamp">Submitted on: ${new Date(item.createdAt).toLocaleDateString()}</span>
+                            </div>`;
+                    });
+                    feedbackContainer.innerHTML = html;
+                } else {
+                    feedbackContainer.innerHTML = '<p>No feedbacks submitted yet.</p>';
+                }
+            } catch (err) {
+                console.error("Error loading feedbacks:", err);
+                feedbackContainer.innerHTML = '<p>Could not load feedbacks at this time.</p>';
+            }
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<i class="fas fa-star${i <= rating ? '' : '-o'}" style="color: gold;"></i>`; // Use full or empty star
+            }
+            return stars;
+        }
+
+        // Function to close the overlay (called by close buttons)
+        function closeFeedbackOverlay() {
+            const overlay = document.getElementById('feedback-overlay'); // Find the parent overlay container
+            if (overlay) {
+                overlay.style.display = 'none';
+                overlay.innerHTML = ''; // Clear content when closing
+            }
+        }
+         // Optional: Fetch collector name - Requires a backend endpoint /api/users/:id
+        /*
+        async function getCollectorName(collectorId) {
+            try {
+                const res = await fetch(`/api/users/${collectorId}`);
+                const data = await res.json();
+                return data.success ? data.user.name : 'Unknown Collector';
+            } catch {
+                return 'Unknown Collector';
+            }
+        }
+        */
     </script>
-  </body>
+</body>
 </html>

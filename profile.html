@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Your Profile - NourishNet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/profile.css"/> <!-- Add specific profile CSS -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
   </head>
   <body>
@@ -22,83 +24,131 @@
       <div id="menu-btn" class="fas fa-bars"></div>
     </section>
 
-    <div class="profile-container">
-      <h1>Welcome, <span id="username-display"></span></h1>
-      <p>You are logged in as a <span id="user-role"></span>.</p>
-
-      <!-- User Details -->
-      <div id="user-details" class="user-details">
-        <p><strong>Name:</strong> <span id="detail-name"></span></p>
-        <p><strong>Email:</strong> <span id="detail-email"></span></p>
-        <p><strong>Contact:</strong> <span id="detail-contact"></span></p>
-        <p><strong>Role:</strong> <span id="detail-role"></span></p>
-        <p><strong>Categories (if distributor):</strong> <span id="detail-categories"></span></p>
-        <p><strong>Region (if collector):</strong> <span id="detail-region"></span></p>
-        <p><strong>Requirements (if collector):</strong> <span id="detail-requirements"></span></p>
-      </div>
-
-      <button class="btn" id="edit-profile-btn" onclick="toggleEditProfile()">Edit Profile</button>
-
-      <!-- Edit Profile Form -->
-      <div id="edit-profile-form" class="edit-profile" style="display: none;">
-        <h2>Edit Profile</h2>
-        <form onsubmit="submitProfileEdits(event)">
-          <div class="inputBox">
-            <label>Name</label>
-            <input type="text" id="edit-name" />
-          </div>
-          <div class="inputBox">
-            <label>Email</label>
-            <input type="email" id="edit-email" />
-          </div>
-          <div class="inputBox">
-            <label>Contact</label>
-            <input type="text" id="edit-contact" />
-          </div>
-          <!-- Distributor-only fields -->
-          <div class="inputBox distributor-only" style="display: none;">
-            <label>Categories</label>
-            <input type="text" id="edit-categories" />
-          </div>
-          <!-- Collector-only fields -->
-          <div class="inputBox collector-only" style="display: none;">
-            <label>Region</label>
-            <input type="text" id="edit-region" />
-          </div>
-          <div class="inputBox collector-only" style="display: none;">
-            <label>Requirements</label>
-            <input type="text" id="edit-requirements" />
-          </div>
-          <button type="submit" class="btn">Save Changes</button>
-          <button type="button" class="btn" onclick="toggleEditProfile()">Cancel</button>
-        </form>
-      </div>
-
-      <hr />
-
-      <!-- Change Password Section -->
-      <div class="change-password-section">
-        <h2>Change Password</h2>
-        <form onsubmit="changePassword(event)">
-          <div class="inputBox">
-            <label>Old Password</label>
-            <input type="password" id="old-password" required />
-          </div>
-          <div class="inputBox">
-            <label>New Password</label>
-            <input type="password" id="new-password" required />
-          </div>
-          <div class="inputBox">
-            <label>Confirm New Password</label>
-            <input type="password" id="confirm-new-password" required />
-          </div>
-          <button type="submit" class="btn">Update Password</button>
-        </form>
-        <p>Forgot password? <a href="forgot-password.html">Click here</a></p>
-      </div>
+    <!-- Heading -->
+    <div class="heading" style="background: url(images/header-profile.jpg) no-repeat center/cover"> <!-- Choose a suitable profile header image -->
+        <h1>Your Profile</h1>
     </div>
 
-    <!-- Footer -->
+    <section class="profile-page">
+        <div class="profile-container dashboard-section"> <!-- Re-use dashboard section styling -->
+            <h2>Welcome, <span id="username-display" style="color: var(--main-color);">User</span>!</h2>
+            <p>Manage your NourishNet account details below.</p>
+            <div id="profile-message" style="margin: 10px 0; font-weight: bold;"></div>
+
+             <!-- User Details Display -->
+             <div id="user-details" class="user-details-display">
+                 <h3><i class="fas fa-user-circle"></i> Your Information</h3>
+                 <p><strong>Name:</strong> <span id="detail-name">Loading...</span></p>
+                 <p><strong>Email:</strong> <span id="detail-email">Loading...</span></p>
+                 <p><strong>Contact:</strong> <span id="detail-contact">Loading...</span></p>
+                 <p><strong>Role:</strong> <span id="detail-role" style="text-transform: capitalize;">Loading...</span></p>
+                 <!-- Role-specific details -->
+                 <div class="distributor-only" style="display: none;">
+                    <p><strong>Donated Categories:</strong> <span id="detail-categories">Loading...</span></p>
+                 </div>
+                 <div class="collector-only" style="display: none;">
+                     <p><strong>Operating Region:</strong> <span id="detail-region">Loading...</span></p>
+                     <p><strong>Typical Requirements:</strong> <span id="detail-requirements">Loading...</span></p>
+                 </div>
+                  <button class="btn edit-profile-btn" id="edit-profile-toggle-btn" onclick="toggleEditProfile()">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button>
+             </div>
+
+
+             <!-- Edit Profile Form (Initially Hidden) -->
+             <div id="edit-profile-form" class="edit-profile-section" style="display: none;">
+                 <h3><i class="fas fa-pencil-alt"></i> Edit Your Information</h3>
+                 <form onsubmit="submitProfileEdits(event)">
+                     <div class="inputBox">
+                         <label for="edit-name">Name <span style="color:red">*</span></label>
+                         <input type="text" id="edit-name" required />
+                     </div>
+                     <div class="inputBox">
+                         <label for="edit-email">Email <span style="color:red">*</span></label>
+                         <input type="email" id="edit-email" required />
+                     </div>
+                     <div class="inputBox">
+                         <label for="edit-contact">Contact (Phone/Address) <span style="color:red">*</span></label>
+                         <input type="text" id="edit-contact" required/>
+                     </div>
+                     <!-- Distributor-only fields -->
+                     <div class="inputBox distributor-only" style="display: none;">
+                         <label for="edit-categories">Donated Categories <span style="color:red">*</span></label>
+                         <input type="text" id="edit-categories" />
+                     </div>
+                     <!-- Collector-only fields -->
+                     <div class="inputBox collector-only" style="display: none;">
+                         <label for="edit-region">Operating Region <span style="color:red">*</span></label>
+                         <input type="text" id="edit-region" />
+                     </div>
+                     <div class="inputBox collector-only" style="display: none;">
+                         <label for="edit-requirements">Typical Requirements <span style="color:red">*</span></label>
+                         <input type="text" id="edit-requirements" />
+                     </div>
+                     <div class="form-actions">
+                         <button type="submit" class="btn save-btn"><i class="fas fa-save"></i> Save Changes</button>
+                         <button type="button" class="btn cancel-btn" onclick="toggleEditProfile()"><i class="fas fa-times"></i> Cancel</button>
+                     </div>
+                 </form>
+             </div>
+
+             <hr style="margin: 2rem 0; border-top: 1px solid #eee;"/>
+
+             <!-- Change Password Section -->
+             <div class="change-password-section">
+                 <h3><i class="fas fa-key"></i> Change Password</h3>
+                 <form id="change-password-form" onsubmit="changePassword(event)">
+                     <div class="inputBox">
+                         <label for="old-password">Current Password <span style="color:red">*</span></label>
+                         <input type="password" id="old-password" required />
+                     </div>
+                     <div class="inputBox">
+                         <label for="new-password">New Password <span style="color:red">*</span></label>
+                         <input type="password" id="new-password" required minlength="6"/>
+                     </div>
+                     <div class="inputBox">
+                         <label for="confirm-new-password">Confirm New Password <span style="color:red">*</span></label>
+                         <input type="password" id="confirm-new-password" required minlength="6"/>
+                     </div>
+                      <div id="password-message" style="margin: 10px 0; font-weight: bold;"></div>
+                     <button type="submit" class="btn"><i class="fas fa-sync-alt"></i> Update Password</button>
+                 </form>
+                 <p style="margin-top: 1rem; font-size: 0.9em;">
+                     <a href="forgot-password.html">Forgot your password?</a>
+                 </p>
+             </div>
+         </div>
+     </section>
+
+
+    <!-- Social Section -->
+    <section class="social-section">
+      <h2>Be part of our mission</h2>
+      <p>
+        Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
+      </p>
+      <div class="social-icons">
+        <div class="social-item">
+          <i class="fab fa-facebook-f facebook-link"></i>
+          <a href="#" class="facebook-link">Facebook</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-twitter twitter-link"></i>
+          <a href="#" class="twitter-link">Twitter</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-instagram instagram-link"></i>
+          <a href="#" class="instagram-link">Instagram</a>
+        </div>
+        <div class="social-item">
+          <i class="fab fa-linkedin-in linkedin-link"></i>
+          <a href="#" class="linkedin-link">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-left">
@@ -133,7 +183,8 @@
       </div>
     </footer>
 
-    <script src="js/auth.js"></script>
-    <script src="js/profile.js"></script>
+    <script src="js/script.js"></script> <!-- For menu -->
+    <script src="js/auth.js"></script> <!-- For nav and user info -->
+    <script src="js/profile.js"></script> <!-- Profile specific logic -->
   </body>
 </html>

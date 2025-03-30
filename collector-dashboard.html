@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Collector Dashboard - NourishNet</title>
-    <!-- Swiper CSS -->
+    <!-- Swiper CSS (Keep if used elsewhere, maybe not needed here) -->
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" /> <!-- Add a dedicated dashboard CSS -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
   </head>
   <body>
@@ -18,8 +19,7 @@
     <section class="header">
       <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
       <nav class="navbar">
-        <!-- Navbar will be updated by js/auth.js on DOMContentLoaded -->
-        <!-- Fallback links for logged-out users -->
+        <!-- Navbar will be updated by js/auth.js -->
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="donations.html">Donations</a>
@@ -30,44 +30,43 @@
     </section>
 
     <!-- Heading -->
-    <!-- Use an existing image for the header -->
     <div class="heading" style="background: url(images/header-food.jpg) no-repeat center/cover">
       <h1>Collector Dashboard</h1>
     </div>
 
     <!-- Dashboard Section -->
     <section class="dashboard">
-      <div class="dashboard-container">
-        <!-- Donations List -->
-        <div class="donations-list">
-          <h2>Available Food Donations</h2>
-          <div class="grid-container">
-            <!-- For demonstration, a static donation card -->
-            <div class="donation-card" id="donation-card-1">
-              <img src="images/donation-1.png" alt="" />
-              <h3>Vegetarian Meal</h3>
-              <p>
-                <span class="donation-quantity">50</span> servings | Downtown
-              </p>
-              <button class="btn" onclick="openOrderOverlay('1')">Request Donation</button>
+        <h2 class="dashboard-title">Welcome, Collector!</h2>
+
+        <!-- Available Donations Section -->
+        <div class="dashboard-section available-donations">
+            <h3><i class="fas fa-utensils"></i> Available Food Donations</h3>
+            <div class="grid-container" id="donations-container">
+                <!-- Donation cards will be loaded dynamically -->
+                <p>Loading available donations...</p>
             </div>
-          </div>
         </div>
+
         <!-- Prior Orders Section -->
-        <div class="prior-orders">
-          <h2>Your Prior Orders</h2>
-          <div id="order-history">
-            <!-- Sample order card or message if no orders exist -->
-            <p>No orders yet!</p>
-          </div>
+        <div class="dashboard-section prior-orders">
+            <h3><i class="fas fa-history"></i> Your Order History</h3>
+            <div id="order-history">
+                <!-- Order history items will be loaded dynamically -->
+                <p>Loading your order history...</p>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- Order Overlay Container -->
-    <div id="order-overlay" class="overlay" style="display: none;"></div>
-    <!-- Feedback Detail Overlay for Collector -->
-    <div id="collector-feedback-modal" class="overlay" style="display: none;"></div>
+    <!-- Order Request Overlay Container (hidden by default) -->
+    <div id="order-overlay" class="overlay" style="display: none;">
+        <!-- Content loaded dynamically by order.js -->
+    </div>
+
+    <!-- Feedback Submission Modal Container (hidden by default) -->
+    <div id="collector-feedback-modal" class="overlay" style="display: none;">
+        <!-- Content loaded dynamically by overlay.js -->
+    </div>
+
 
     <!-- Social Section -->
     <section class="social-section">
@@ -131,12 +130,175 @@
     </footer>
 
     <!-- Include required scripts -->
-    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/order.js"></script>
-    <script src="js/feedback.js"></script>
-    <script src="js/overlay.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script> <!-- Keep if swiper used -->
+    <script src="js/script.js"></script> <!-- For menu toggle -->
+    <script src="js/auth.js"></script> <!-- For nav bar update & user info -->
+    <script src="js/order.js"></script> <!-- For handling order overlay -->
+    <script src="js/overlay.js"></script> <!-- For handling feedback modal -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            // Redirect if not logged in or not a collector
+            if (!user || user.role !== 'collector') {
+                alert('Access denied. Please login as a collector.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Fetch and display available donations
+            loadAvailableDonations();
+
+            // Fetch and display order history
+            loadOrderHistory(user._id); // Pass user ID
+        });
+
+        // Function to load available donations
+        async function loadAvailableDonations() {
+            const container = document.getElementById('donations-container');
+            try {
+                const res = await fetch('/api/donations/active'); // Endpoint for active donations
+                const data = await res.json();
+
+                if (data.donations && data.donations.length > 0) {
+                    container.innerHTML = ''; // Clear loading message
+                    data.donations.forEach(donation => {
+                        const card = document.createElement('div');
+                        card.classList.add('donation-card');
+                        card.id = `donation-card-${donation._id}`; // Unique ID for updates
+                        card.innerHTML = `
+                            <img src="${donation.foodImage || 'images/placeholder-food.png'}" alt="${donation.foodType} donation" class="donation-image"/>
+                            <div class="donation-info">
+                                <h3>${donation.foodType} Meal / Items</h3>
+                                <p><i class="fas fa-map-marker-alt"></i> Location: ${donation.location}</p>
+                                <p><i class="fas fa-box-open"></i> Available: <span class="donation-quantity">${donation.quantity}</span> servings</p>
+                                <p><i class="far fa-clock"></i> Pickup: ${donation.pickupTime}</p>
+                                <p><i class="far fa-calendar-times"></i> Use By: ${new Date(donation.useBy).toLocaleString()}</p>
+                                ${donation.allergy ? `<p><i class="fas fa-exclamation-triangle"></i> Allergens: ${donation.allergy}</p>` : ''}
+                                <button class="btn request-btn" onclick="openOrderOverlay('${donation._id}')">Request Donation</button>
+                             </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = '<p>No active donations available right now. Check back later!</p>';
+                }
+            } catch (err) {
+                console.error('Error fetching available donations:', err);
+                container.innerHTML = '<p>Could not load donations. Please try refreshing.</p>';
+            }
+        }
+
+         // Function to load order history for the collector
+        async function loadOrderHistory(collectorId) {
+            const historyContainer = document.getElementById('order-history');
+            try {
+                 // Use the dashboard endpoint which should return orderHistory
+                const res = await fetch(`/api/dashboard/collector/${collectorId}`);
+                const data = await res.json();
+
+                if (data.success && data.orderHistory && data.orderHistory.length > 0) {
+                    historyContainer.innerHTML = ''; // Clear loading message
+                     // Fetch feedback status for all orders first (optimization needed for many orders)
+                    const feedbackStatuses = await checkFeedbackStatus(data.orderHistory.map(o => o._id));
+
+                    data.orderHistory.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate)); // Sort newest first
+
+                    for (const order of data.orderHistory) {
+                         // Fetch donation details for context (Consider embedding key details in order object in backend)
+                         const donationDetails = await getDonationDetails(order.donationId);
+                         const distributorName = donationDetails ? donationDetails.distributorName : 'the distributor'; // Assuming you fetch distributor name too
+
+                         const orderItem = document.createElement('div');
+                         orderItem.classList.add('order-history-item');
+                         const feedbackGiven = feedbackStatuses[order._id]; // Check if feedback exists for this order
+
+                         orderItem.innerHTML = `
+                             <div class="order-details">
+                                 <p><strong>Order ID:</strong> ${order._id}</p>
+                                 <p><strong>Donation:</strong> ${donationDetails ? donationDetails.foodType : 'Details unavailable'} from ${distributorName}</p>
+                                 <p><strong>Quantity Requested:</strong> ${order.itemCount} servings</p>
+                                 <p><strong>Order Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</p>
+                                 <p><strong>Status:</strong> ${order.status || 'Completed'}</p>
+                             </div>
+                             <div class="order-actions">
+                                 <button class="btn feedback-btn" data-order-id="${order._id}" onclick="openCollectorFeedbackModal('${order._id}', '${distributorName}')" ${feedbackGiven ? 'disabled' : ''}>
+                                     ${feedbackGiven ? 'Feedback Submitted' : 'Give Feedback'}
+                                 </button>
+                             </div>
+                         `;
+                         // Add style for disabled button
+                        if (feedbackGiven) {
+                             const btn = orderItem.querySelector('.feedback-btn');
+                             btn.style.opacity = '0.6';
+                             btn.style.cursor = 'not-allowed';
+                         }
+                         historyContainer.appendChild(orderItem);
+                     }
+                } else if (data.success) {
+                    historyContainer.innerHTML = '<p>You haven\'t placed any orders yet!</p>';
+                } else {
+                     historyContainer.innerHTML = '<p>Could not load order history.</p>';
+                }
+            } catch (err) {
+                console.error('Error fetching order history:', err);
+                historyContainer.innerHTML = '<p>Error loading order history. Please try refreshing.</p>';
+            }
+        }
+
+        // Helper to fetch minimal donation details (food type, maybe distributor name)
+        async function getDonationDetails(donationId) {
+            // This is inefficient if called for every order.
+            // Better: Backend endpoint to get orders WITH essential donation/distributor details included.
+            // Or: Fetch all distributors once and map names.
+            // For now, a simple fetch per order as a placeholder:
+            if (!donationId) return null;
+            try {
+                const res = await fetch(`/api/donations/${donationId}`); // Use your existing endpoint
+                const data = await res.json();
+                if (data.success) {
+                    // Ideally, fetch distributor name too
+                    // const distRes = await fetch(`/api/users/${data.donation.distributor}`);
+                    // const distData = await distRes.json();
+                    // data.donation.distributorName = distData.success ? distData.user.name : 'Unknown Distributor';
+                    data.donation.distributorName = 'Distributor'; // Placeholder
+                    return data.donation;
+                }
+                return null;
+            } catch (err) {
+                console.error(`Error fetching details for donation ${donationId}:`, err);
+                return null;
+            }
+        }
+
+         // Helper function to check which orders already have feedback
+         // Ideally, this check is done more efficiently on the backend or the order object includes a 'feedbackGiven' flag.
+         async function checkFeedbackStatus(orderIds) {
+             if (!orderIds || orderIds.length === 0) return {};
+             try {
+                 // Fetch all feedbacks
+                 const res = await fetch('/api/feedback/all');
+                 const data = await res.json();
+                 const feedbackMap = {};
+                 if (data.feedbacks) {
+                     data.feedbacks.forEach(fb => {
+                         feedbackMap[fb.orderId] = true; // Mark orderId as having feedback
+                     });
+                 }
+                  // Create result map for the given orderIds
+                 const resultMap = {};
+                 orderIds.forEach(id => {
+                     resultMap[id] = feedbackMap[id] || false;
+                 });
+                 return resultMap;
+             } catch (err) {
+                 console.error("Error checking feedback status:", err);
+                 const errorMap = {};
+                 orderIds.forEach(id => { errorMap[id] = false; }); // Assume no feedback on error
+                 return errorMap;
+             }
+         }
+
+    </script>
   </body>
 </html>

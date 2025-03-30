@@ -1,0 +1,206 @@
+/* profile.css - Styles for the User Profile Page */
+
+.profile-page {
+    padding: 3rem 5%;
+}
+
+/* Reuse dashboard section styling for the main container */
+.profile-container {
+    max-width: 800px; /* Limit width for better readability */
+    margin: 0 auto; /* Center the container */
+}
+
+.profile-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* User Details Display Area */
+.user-details-display {
+    background-color: #f9f9f9;
+    padding: 1.5rem 2rem;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    margin-bottom: 2rem;
+}
+
+.user-details-display h3 {
+    font-size: 1.4rem;
+    color: #444;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.user-details-display h3 i {
+    margin-right: 10px;
+    color: var(--main-color, #27ae60);
+}
+
+.user-details-display p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 0.8rem;
+    display: flex; /* Align label and value */
+}
+
+.user-details-display p strong {
+    font-weight: 600;
+    color: #333;
+    min-width: 180px; /* Adjust as needed for alignment */
+    display: inline-block;
+}
+
+.user-details-display span {
+    color: #555; /* Ensure value text color */
+}
+
+.edit-profile-btn {
+    margin-top: 1.5rem;
+    display: inline-block; /* Fit content */
+    width: auto; /* Override default full width */
+    padding: 10px 20px;
+    font-size: 0.95rem;
+}
+
+.edit-profile-btn i {
+    margin-right: 8px;
+}
+
+/* Edit Profile Form Section */
+.edit-profile-section {
+    border: 1px solid #ddd;
+    padding: 2rem;
+    border-radius: 6px;
+    background-color: #fff;
+    margin-top: 1rem; /* Add space if it follows the display section directly */
+}
+
+.edit-profile-section h3 {
+    font-size: 1.4rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+.edit-profile-section h3 i {
+    margin-right: 10px;
+    color: var(--main-color, #27ae60);
+}
+
+
+.edit-profile-section .inputBox {
+    margin-bottom: 1.2rem;
+}
+
+.edit-profile-section .inputBox label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.edit-profile-section .inputBox input[type="text"],
+.edit-profile-section .inputBox input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.edit-profile-section .form-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem; /* Space between buttons */
+}
+
+.edit-profile-section .form-actions .btn {
+    width: auto; /* Fit content */
+    padding: 10px 25px;
+    font-size: 1rem;
+}
+
+.edit-profile-section .form-actions .save-btn {
+    background-color: var(--main-color, #27ae60);
+}
+.edit-profile-section .form-actions .save-btn:hover {
+    background-color: #229954; /* Darker green */
+}
+
+.edit-profile-section .form-actions .cancel-btn {
+    background-color: #6c757d; /* Grey */
+}
+.edit-profile-section .form-actions .cancel-btn:hover {
+    background-color: #5a6268; /* Darker grey */
+}
+
+
+/* Change Password Section */
+.change-password-section {
+    margin-top: 2rem; /* Space after edit section or hr */
+    padding-top: 1.5rem;
+}
+
+.change-password-section h3 {
+     font-size: 1.4rem;
+     color: #444;
+     margin-bottom: 1.5rem;
+}
+
+.change-password-section h3 i {
+    margin-right: 10px;
+    color: var(--main-color, #27ae60);
+}
+
+.change-password-section .inputBox {
+    margin-bottom: 1.2rem;
+}
+
+.change-password-section .inputBox label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.change-password-section .inputBox input[type="password"] {
+     width: 100%;
+     padding: 10px 12px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     font-size: 1rem;
+}
+
+.change-password-section .btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 12px;
+}
+
+/* Message Areas */
+#profile-message, #password-message {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 1rem; /* Consistent spacing */
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-container {
+        max-width: 100%;
+    }
+    .user-details-display p strong {
+        min-width: 120px; /* Reduce label width */
+    }
+    .edit-profile-section .form-actions {
+        flex-direction: column; /* Stack buttons */
+    }
+    .edit-profile-section .form-actions .btn {
+        width: 100%; /* Full width buttons on mobile */
+    }
+
+}

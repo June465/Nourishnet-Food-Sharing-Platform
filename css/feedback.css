@@ -1,23 +1,144 @@
-/* Feedback overlay styling – follows similar fonts, padding, and margins as existing pages */
-body {
-    background: #f5f5f5;
-    font-family: 'Poppins', sans-serif;
-  }
-  .feedback-container {
-    max-width: 900px;
-    margin: 3rem auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
-    text-align: center;
-  }
-  #feedback-items {
-    margin-top: 2rem;
-  }
-  .feedback-item {
-    padding: 1rem;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
-  
+/* Feedback Overlay Specific Styles */
+.feedback-overlay-content {
+  background: #fff;
+  padding: 2rem 3rem; /* More padding */
+  border-radius: 10px;
+  width: 90%;
+  max-width: 700px; /* Wider for better display */
+  position: relative; /* For close button positioning */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-height: 80vh; /* Limit height */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack elements vertically */
+}
+
+.feedback-overlay-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem; /* Slightly larger title */
+  color: #333;
+  border-bottom: 1px solid #eee; /* Add a separator */
+  padding-bottom: 1rem;
+}
+
+/* Style the close button (top right) */
+.feedback-overlay-content .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 2.5rem; /* Larger close icon */
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1; /* Prevent extra spacing */
+  transition: color 0.3s ease;
+}
+
+.feedback-overlay-content .close-btn:hover {
+  color: #555;
+}
+
+/* Container for scrollable feedback items */
+.feedback-scroll-container {
+  overflow-y: auto; /* Enable vertical scrolling */
+  flex-grow: 1; /* Allow this section to take available space */
+  margin-bottom: 1rem; /* Space before bottom button */
+  padding-right: 10px; /* Prevent scrollbar overlap */
+  text-align: left; /* Align items left */
+}
+
+/* Individual Feedback Item Styling */
+#feedback-items {
+  width: 100%;
+}
+
+.feedback-item {
+  background-color: #f9f9f9; /* Light background for each item */
+  border: 1px solid #eee;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem; /* Space between items */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.feedback-item:hover {
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-user {
+  font-weight: 600;
+  color: #555;
+  font-size: 1rem;
+}
+
+.feedback-rating {
+  font-size: 0.9rem;
+}
+
+.feedback-comment {
+  font-size: 1rem; /* Standard text size */
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-timestamp {
+  font-size: 0.8rem;
+  color: #888;
+  display: block; /* Put timestamp on its own line */
+  text-align: right; /* Align timestamp to the right */
+}
+
+/* Style the bottom close button */
+.close-btn-bottom {
+  margin-top: 1rem; /* Add space above the button */
+  width: auto; /* Don't make it full width */
+  padding: 10px 25px; /* Adjust padding */
+  align-self: center; /* Center the button horizontally */
+}
+
+/* General overlay styling (copied/adapted from order.css or style.css) */
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.6); /* Semi-transparent background */
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000; /* Ensure it's on top */
+font-family: 'Poppins', sans-serif; /* Match font */
+}
+
+/* Hide scrollbar for the body when overlay is active (optional) */
+body.overlay-active {
+overflow: hidden;
+}
+
+/* Scrollbar styling for the feedback container */
+.feedback-scroll-container::-webkit-scrollbar {
+width: 8px;
+}
+
+.feedback-scroll-container::-webkit-scrollbar-track {
+background: #f1f1f1;
+border-radius: 10px;
+}
+
+.feedback-scroll-container::-webkit-scrollbar-thumb {
+background: #ccc;
+border-radius: 10px;
+}
+
+.feedback-scroll-container::-webkit-scrollbar-thumb:hover {
+background: #aaa;
+}

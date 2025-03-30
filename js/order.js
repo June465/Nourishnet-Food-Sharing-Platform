@@ -1,112 +1,198 @@
-// File: js/order.js
-
-// Open the order overlay for a given donationId
-function openOrderOverlay(donationId) {
-  // 1. Check if user is logged in
+// Open the order request overlay for a given donationId
+async function openOrderOverlay(donationId) {
+  // 1. Check if user is logged in AND is a collector
   const user = JSON.parse(localStorage.getItem('user'));
   if (!user) {
-    window.location.href = 'login.html';
-    return;
+      alert('Please log in to request a donation.');
+      window.location.href = 'login.html';
+      return;
   }
-  
-  // 2. Get the overlay container and clear previous content
+   if (user.role !== 'collector') {
+       alert('Only collectors can request donations.');
+       return;
+   }
+
+  // 2. Get the overlay container element
   const overlayDiv = document.getElementById('order-overlay');
-  overlayDiv.innerHTML = '';
+  if (!overlayDiv) {
+      console.error("Order overlay container not found!");
+      return;
+  }
 
-  // 3. Fetch donation details from the backend API
-  fetch('/api/donations/' + donationId)
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        const donation = data.donation;
-        // 4. Load the order.html overlay content
-        fetch('order.html')
-          .then(response => response.text())
-          .then(html => {
-            overlayDiv.innerHTML = html;
-            overlayDiv.style.display = 'block';
-            // 5. Populate the overlay with the fetched donation details
-            const detailsDiv = document.getElementById('order-details');
-            if (detailsDiv) {
-              detailsDiv.innerHTML = `
-                <p><strong>Donation ID:</strong> <span id="overlay-donation-id">${donation._id}</span></p>
-                <p><strong>Servings:</strong> <span id="overlay-servings">${donation.quantity}</span></p>
-                <p><strong>Pickup Time:</strong> ${donation.pickupTime}</p>
-                <p><strong>Location:</strong> ${donation.location}</p>
-                <p><strong>Use By:</strong> ${new Date(donation.useBy).toLocaleString()}</p>
-              `;
-            } else {
-              console.error("Element with id 'order-details' not found.");
-            }
-          })
-          .catch(err => console.error('Error loading order.html:', err));
-      } else {
-        alert('Donation not found');
+  overlayDiv.innerHTML = '<p style="color:white; text-align:center; padding:20px;">Loading donation details...</p>';
+  overlayDiv.style.display = 'flex'; // Show loading state
+  document.body.classList.add('overlay-active'); // Optional: Disable body scroll
+
+  try {
+      // 3. Fetch donation details from the backend API
+      const donationResponse = await fetch('/api/donations/' + donationId);
+      if (!donationResponse.ok) throw new Error(`Failed to fetch donation details (Status: ${donationResponse.status})`);
+      const donationData = await donationResponse.json();
+
+      if (!donationData.success || !donationData.donation) {
+          throw new Error(donationData.message || 'Donation not found.');
       }
-    })
-    .catch(err => console.error('Error fetching donation details:', err));
-}
+      const donation = donationData.donation;
 
-function closeOrderOverlay() {
-  const overlay = document.querySelector('.order-overlay');
-  if (overlay) {
-    overlay.style.display = 'none';
+       // Check if donation quantity is zero before showing form
+       if (donation.quantity <= 0) {
+           overlayDiv.innerHTML = `
+               <div class="order-modal" style="background:white; padding:2rem; border-radius:8px; text-align:center;">
+                   <span class="close-btn" onclick="closeOrderOverlay()" style="position:absolute; top:1rem; right:1rem; font-size:2rem; cursor:pointer;">&times;</span>
+                   <h2>Donation Not Available</h2>
+                   <p>Sorry, all servings for this donation have already been requested.</p>
+                   <button class="btn" onclick="closeOrderOverlay()">Close</button>
+               </div>`;
+           return; // Stop execution
+       }
+
+
+      // 4. Load the order.html structure (assuming it contains the form skeleton)
+      // We'll inject the details into this structure.
+      const orderFormHtml = `
+          <div class="order-modal">
+              <span class="close-btn" onclick="closeOrderOverlay()">&times;</span>
+              <h2>Request Donation</h2>
+              <form id="order-form" onsubmit="submitOrder(event)">
+                  <div id="order-details-display" class="order-info">
+                       <!-- Donation details will be injected here -->
+                       <p><strong>Type:</strong> ${donation.foodType}</p>
+                       <p><strong>Available Servings:</strong> <span id="overlay-servings">${donation.quantity}</span></p>
+                       <p><strong>Pickup Time:</strong> ${donation.pickupTime}</p>
+                       <p><strong>Location:</strong> ${donation.location}</p>
+                       <p><strong>Use By:</strong> ${new Date(donation.useBy).toLocaleString()}</p>
+                       ${donation.allergy ? `<p><strong>Allergens:</strong> ${donation.allergy}</p>` : ''}
+                       <hr>
+                  </div>
+                  <div class="inputBox">
+                      <label for="itemCount">How many servings/items do you need? <span style="color:red">*</span></label>
+                      <input type="number" name="itemCount" id="itemCount" placeholder="Enter quantity" min="1" max="${donation.quantity}" required />
+                  </div>
+                  <!-- Hidden input for donationId -->
+                  <input type="hidden" name="donationId" value="${donation._id}">
+                  <div id="order-error-message" style="color:red; margin-bottom:10px;"></div>
+                  <input type="submit" value="Submit Request" class="btn" />
+              </form>
+              <div id="order-summary" class="hidden" style="margin-top: 1.5rem; padding: 1rem; background: #eaf7e9; border-left: 4px solid #28a745; border-radius: 4px;">
+                  <!-- Summary shown after successful submission -->
+              </div>
+          </div>
+      `;
+
+      // Inject the form HTML into the overlay
+      overlayDiv.innerHTML = orderFormHtml;
+      // Apply necessary CSS or ensure order.css is loaded/included
+      const styleLink = document.createElement('link');
+      styleLink.rel = 'stylesheet';
+      styleLink.href = 'css/order.css'; // Assuming order overlay styles are here
+      document.head.appendChild(styleLink); // Append styles if not globally loaded
+
+
+  } catch (err) {
+      console.error('Error opening order overlay:', err);
+      overlayDiv.innerHTML = `<div style="background:white; padding:20px; border-radius:5px;">Error loading details: ${err.message}. <button onclick="closeOrderOverlay()">Close</button></div>`;
   }
 }
 
-function submitOrder(event) {
+// Close the order overlay
+function closeOrderOverlay() {
+  const overlay = document.getElementById('order-overlay');
+  if (overlay) {
+      overlay.style.display = 'none';
+      overlay.innerHTML = ''; // Clear content
+  }
+  document.body.classList.remove('overlay-active'); // Re-enable body scroll
+}
+
+// Submit the order request
+async function submitOrder(event) {
   event.preventDefault();
   const form = event.target;
-  const orderData = Object.fromEntries(new FormData(form));
+  const summaryDiv = document.getElementById('order-summary');
+  const errorDiv = document.getElementById('order-error-message');
+  const submitButton = form.querySelector('input[type="submit"]');
+  errorDiv.textContent = ''; // Clear previous errors
+  summaryDiv.classList.add('hidden'); // Hide previous summary
 
-  // Get donationId from overlay details
-  const donationId = document.getElementById('overlay-donation-id').innerText;
-  orderData.donationId = donationId;
+  const orderData = {
+      itemCount: parseInt(form.itemCount.value),
+      donationId: form.donationId.value,
+      collector: null // Will be filled from localStorage
+  };
 
-  // Attach collector id from localStorage if available
+   // Basic validation
+   if (isNaN(orderData.itemCount) || orderData.itemCount <= 0) {
+       errorDiv.textContent = 'Please enter a valid quantity greater than 0.';
+       return;
+   }
+   // Check against available quantity again (though max attribute helps)
+   const availableServings = parseInt(document.getElementById('overlay-servings')?.textContent || '0');
+   if (orderData.itemCount > availableServings) {
+        errorDiv.textContent = `Cannot request more than the available ${availableServings} servings.`;
+        return;
+   }
+
+
+  // Get collector ID from localStorage
   const user = JSON.parse(localStorage.getItem('user'));
-  if (user) {
-    orderData.collector = user._id || user.id;
+  if (!user || !user._id) {
+      errorDiv.textContent = 'Error: Could not identify collector. Please log in again.';
+      return;
   }
+  orderData.collector = user._id;
 
-  fetch('/api/donations/order', {
-    method: 'POST',
-    body: JSON.stringify(orderData),
-    headers: { 'Content-Type': 'application/json' }
-  })
-    .then(res => res.json())
-    .then(data => {
-      const summaryDiv = document.getElementById('order-summary');
+  submitButton.value = 'Submitting...';
+  submitButton.disabled = true;
+
+  try {
+      const response = await fetch('/api/donations/order', {
+          method: 'POST',
+          body: JSON.stringify(orderData),
+          headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+
       if (data.success) {
-        summaryDiv.innerHTML = `
-          <h3>Thank You!</h3>
-          <p>Your order has been placed. Order ID: ${data.orderId}</p>
-          <p>Remaining servings: ${data.updatedDonation.quantity}</p>
-        `;
-        summaryDiv.classList.remove('hidden');
-        form.style.display = 'none';
+          summaryDiv.innerHTML = `
+              <h3><i class="fas fa-check-circle" style="color: green;"></i> Thank You!</h3>
+              <p>Your request for ${orderData.itemCount} servings has been placed successfully.</p>
+              <p><strong>Order ID:</strong> ${data.orderId}</p>
+              <p>You will be notified about pickup details if applicable.</p>
+              <p>Remaining servings for this donation: ${data.updatedDonation.quantity}</p>
+          `;
+          summaryDiv.classList.remove('hidden');
+          form.style.display = 'none'; // Hide the form
 
-        // Update the serving count in the overlay
-        const overlayServings = document.getElementById('overlay-servings');
-        if (overlayServings) {
-          overlayServings.textContent = data.updatedDonation.quantity;
-        }
+          // Update the quantity on the main page/dashboard card if it exists
+          const donationCard = document.getElementById(`donation-card-${orderData.donationId}`);
+          if (donationCard) {
+              const quantitySpan = donationCard.querySelector('.donation-quantity');
+              if (quantitySpan) {
+                  quantitySpan.textContent = data.updatedDonation.quantity;
+              }
+              // Optionally hide or disable the request button on the card if quantity is now 0
+              if (data.updatedDonation.quantity <= 0) {
+                   const requestButton = donationCard.querySelector('.request-btn');
+                   if (requestButton) {
+                        requestButton.textContent = 'Unavailable';
+                        requestButton.disabled = true;
+                        requestButton.style.opacity = '0.6';
+                        requestButton.style.cursor = 'not-allowed';
+                   }
+               }
+          }
+           // Optionally close overlay after delay
+           // setTimeout(closeOrderOverlay, 4000);
 
-        // If this order was placed from a donation card on the donations page,
-        // update that card’s quantity (if present) and remove the card if quantity <= 0.
-        const donationCard = document.getElementById(`donation-card-${donationId}`);
-        if (donationCard) {
-          const quantitySpan = donationCard.querySelector('.donation-quantity');
-          if (quantitySpan) {
-            quantitySpan.textContent = data.updatedDonation.quantity;
-          }
-          if (data.updatedDonation.quantity <= 0) {
-            donationCard.remove();
-          }
-        }
       } else {
-        alert('Error placing order: ' + data.message);
+          errorDiv.textContent = `Error placing order: ${data.message || 'Unknown error'}`;
+          submitButton.value = 'Submit Request';
+          submitButton.disabled = false;
       }
-    })
-    .catch(err => console.error(err));
+  } catch (err) {
+      console.error('Order submission error:', err);
+      errorDiv.textContent = 'An unexpected error occurred while submitting your request.';
+      submitButton.value = 'Submit Request';
+      submitButton.disabled = false;
+  }
 }
