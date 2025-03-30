@@ -50,10 +50,13 @@ p {
 
 /* Heading */
 .heading {
+  background: url(images/header-food.jpg) no-repeat center/cover;
   background-size: cover;
   background-position: center;
   padding: 10rem 0;
   text-align: center;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  transition: color 0.3s ease-in-out;
 }
 
 .heading h1 {
@@ -163,7 +166,6 @@ p {
   display: inline-block;
   padding: 14px 28px;
   background: #3b82f6;
-  /* Modern Blue */
   color: white;
   border-radius: 8px;
   font-size: 18px;
@@ -554,6 +556,7 @@ p {
 
 .footer-links li {
   margin: 5px 0;
+  font-size: 15px;
 }
 
 .footer-links a,

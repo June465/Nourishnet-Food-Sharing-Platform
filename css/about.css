@@ -107,7 +107,7 @@ body {
 .heading {
     background: url(images/header-food.jpg) no-repeat center/cover;
     text-align: center;
-    padding: 80px 10%;
+    padding: 50px 10%;
     color: var(--text-color);
     font-size: 32px;
     font-weight: bold;
@@ -131,7 +131,8 @@ body {
     flex-wrap: wrap;
     gap: 15px;
     /* Further reduced gap */
-    padding: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
     /* Adjusted padding */
 }
 
@@ -145,17 +146,14 @@ body {
 
 .about .image-container img {
     width: 100%;
-    max-width: 300px;
-    /* Slightly increased width for better balance */
+    max-width: 400px;
     border-radius: 8px;
 }
 
 .about .content {
     flex: 2;
-    max-width: 800px;
-    /* Brought content closer */
-    margin-left: 0;
-    /* Removed unnecessary margin */
+    max-width: 900px;
+    margin-left: 5px;
 }
 
 .about .content h2,

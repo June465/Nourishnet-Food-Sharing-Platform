@@ -8,8 +8,10 @@
     <!-- Swiper CSS (Optional) -->
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/practice.css" /> <!-- Keep existing link -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/dashboard.css" /> <!-- Link dashboard CSS -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
@@ -30,7 +32,7 @@
     </section>
 
     <!-- Heading -->
-    <div class="heading" style="background:url(images/header-dashboard.jpg) no-repeat center/cover">
+    <div class="heading" style="background: url(images/header-food.jpg) no-repeat center/cover">
       <h1>Distributor Dashboard</h1>
     </div>
 
@@ -99,7 +101,7 @@
           </div>
         </div>
 
-      </div> <!-- End of dashboard-grid -->
+      </div>
     </section>
 
     <!-- Optional: Modal/Overlay for Editing Donation -->
@@ -175,6 +177,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script> 
     <script src="js/script.js"></script> <!-- For menu -->
     <script src="js/auth.js"></script> <!-- For nav -->
     <script>
@@ -273,14 +276,28 @@
           const data = await res.json();
 
           if (data.success) {
+
+            // ***** STEP 1: Declare feedbackStatuses HERE *****
+            let feedbackStatuses = {}; // Use let, initialize as empty object
+
+            // ***** STEP 2: Call check function only if needed *****
+            // Check if orderHistory exists before trying to map it or call the function
+            if (data.orderHistory && data.orderHistory.length > 0) {
+                 console.log("Order history found, checking feedback statuses...");
+                 // Assign the result to the already declared variable
+                 feedbackStatuses = await checkFeedbackStatusForDistributor(data.orderHistory.map(o => o._id));
+            } else {
+                 console.log("No order history, skipping feedback status check.");
+                 // feedbackStatuses remains {}
+            }
+            // ^^^^ Now feedbackStatuses is defined and in scope for the rest of the function ^^^^
+
+
             // --- Populate Active Donations ---
+            // (No changes needed inside this block related to feedbackStatuses)
             if (data.activeDonations && data.activeDonations.length > 0) {
-              activeListContainer.innerHTML = ''; // Clear loading message
-               // Fetch feedback status for all orders first
-                const feedbackStatuses = await checkFeedbackStatusForDistributor(data.orderHistory.map(o => o._id));
-
-
-              data.activeDonations.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // Sort oldest first or by useBy?
+              activeListContainer.innerHTML = '';
+              data.activeDonations.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
               data.activeDonations.forEach(donation => {
                 const item = document.createElement('div');
                 item.classList.add('active-donation-item');
@@ -293,7 +310,6 @@
                   </div>
                   <div>
                     <button class="btn edit-btn" onclick="openEditDonationModal('${donation._id}')">Edit</button>
-                    <!-- Add delete button if needed -->
                     <!-- <button class="btn delete-btn" onclick="deleteDonation('${donation._id}')">Delete</button> -->
                   </div>
                 `;
@@ -303,32 +319,36 @@
               activeListContainer.innerHTML = '<p>You have no active donations.</p>';
             }
 
+
             // --- Populate Prior Deliveries & Feedback ---
             if (data.orderHistory && data.orderHistory.length > 0) {
-              historyContainer.innerHTML = ''; // Clear loading message
-              data.orderHistory.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate)); // Sort newest first
+              historyContainer.innerHTML = '';
+              data.orderHistory.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
 
-              // Create a map of feedback keyed by orderId for quick lookup
-              const feedbackMap = {};
+              const feedbackMap = {}; // This is separate and fine
+
+              // ***** STEP 3: Use the feedbackStatuses declared above *****
+              // The if(feedbackStatuses) check is still okay, it will check if the object is truthy (it always will be now)
               if (feedbackStatuses) {
                     Object.entries(feedbackStatuses).forEach(([orderId, feedback]) => {
-                        if (feedback) { // Check if feedback exists
+                        if (feedback) {
                              feedbackMap[orderId] = feedback;
                         }
                     });
               }
+              console.log("Using feedback map to render history:", feedbackMap);
 
-
+              // ... rest of the code to loop through orderHistory and use feedbackMap ...
               data.orderHistory.forEach(order => {
                 const item = document.createElement('div');
                 item.classList.add('delivery-item');
-                const feedback = feedbackMap[order._id]; // Get feedback for this order
+                const feedback = feedbackMap[order._id]; // Get feedback using the map
 
                 item.innerHTML = `
                     <div>
                          <p><strong>Order ID:</strong> ${order._id}</p>
                          <p><strong>Donation ID:</strong> ${order.donationId}</p>
-                         <p><strong>Collector ID:</strong> ${order.collector}</p> <!-- Consider showing name -->
+                         <p><strong>Collector ID:</strong> ${order.collector}</p>
                          <p><strong>Items Taken:</strong> ${order.itemCount}</p>
                          <p><strong>Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</p>
                     </div>
@@ -337,10 +357,9 @@
                              <p><strong>Feedback Received:</strong></p>
                              <div class="feedback-details">
                                 <span class="rating">${generateStars(feedback.rating)}</span>
-                                ${feedback.comment}
+                                ${feedback.comment || 'No comment provided.'} <!-- Added fallback -->
                                 <span style="display:block; font-size: 0.8em; color: #888;"> on ${new Date(feedback.createdAt).toLocaleDateString()}</span>
                              </div>
-                             <!-- <button class="btn view-feedback-btn" onclick="showFeedbackDetail('${feedback._id}')">View Detail</button> -->
                          ` : `
                              <p><i>No feedback submitted yet.</i></p>
                          `}
@@ -348,53 +367,84 @@
                 `;
                 historyContainer.appendChild(item);
               });
+              // ... end of loop ...
             } else {
+              // This case is handled above now
               historyContainer.innerHTML = '<p>No deliveries have been completed yet.</p>';
             }
           } else {
-             activeListContainer.innerHTML = '<p>Could not load active donations.</p>';
-             historyContainer.innerHTML = '<p>Could not load delivery history.</p>';
+             // Handle API failure (data.success is false)
+             console.error("API call failed:", data.message);
+             activeListContainer.innerHTML = `<p>Could not load donations: ${data.message || 'Unknown error'}</p>`;
+             historyContainer.innerHTML = `<p>Could not load delivery history: ${data.message || 'Unknown error'}</p>`;
           }
         } catch (err) {
-          console.error('Error fetching distributor dashboard data:', err);
+           // Handle errors during fetch/JSON parsing or processing
+           console.error('Error in loadDistributorData:', err);
            activeListContainer.innerHTML = '<p>Error loading data. Please refresh.</p>';
            historyContainer.innerHTML = '<p>Error loading data. Please refresh.</p>';
         }
       }
 
-        // Helper to generate star icons
-        function generateStars(rating) {
-            let stars = '';
-            for (let i = 1; i <= 5; i++) {
-                stars += `<i class="fas fa-star" style="color: ${i <= rating ? 'gold' : '#ccc'};"></i>`;
+      // Helper to generate star icons
+      function generateStars(rating) {
+          let stars = '';
+          for (let i = 1; i <= 5; i++) {
+              stars += `<i class="fas fa-star" style="color: ${i <= rating ? 'gold' : '#ccc'};"></i>`;
+          }
+          return stars;
+      }
+
+
+      // Helper function to fetch feedback for the distributor's orders
+      async function checkFeedbackStatusForDistributor(orderIds) {
+            // 1. Handle case where no order IDs are provided
+            if (!orderIds || orderIds.length === 0) {
+                console.log("checkFeedbackStatusForDistributor: No order IDs to check.");
+                return {}; // Return empty object immediately
             }
-            return stars;
+
+            // 2. Wrap the main logic in try...catch
+            try {
+                console.log("checkFeedbackStatusForDistributor: Checking feedback for orders:", orderIds);
+                const res = await fetch('/api/feedback/all'); // Fetch all feedback
+
+                // 3. Check if the fetch itself was successful (status 200-299)
+                if (!res.ok) {
+                    // Log the HTTP error status and return an empty object
+                    console.error(`checkFeedbackStatusForDistributor: Failed to fetch feedback - HTTP status ${res.status}`);
+                    return {}; // Return empty object so the calling function doesn't break
+                }
+
+                // 4. Try to parse the JSON response
+                const data = await res.json();
+
+                // 5. Check if the API indicated success and returned feedbacks
+                if (!data.success || !data.feedbacks) {
+                    console.warn("checkFeedbackStatusForDistributor: API did not return success or feedbacks array.", data);
+                    return {}; // Return empty object if API response isn't as expected
+                }
+
+                // 6. Process the feedbacks if everything is okay
+                console.log(`checkFeedbackStatusForDistributor: Received ${data.feedbacks.length} total feedbacks.`);
+                const feedbackMap = {};
+                data.feedbacks.forEach(fb => {
+                    // Check if the feedback belongs to one of the requested orderIds
+                    if (orderIds.includes(fb.orderId)) {
+                        feedbackMap[fb.orderId] = fb; // Store the feedback object
+                    }
+                });
+
+                console.log("checkFeedbackStatusForDistributor: Constructed feedback map:", feedbackMap);
+                return feedbackMap; // Return the resulting map
+
+            } catch (err) {
+                // 7. Catch any errors during fetch or JSON parsing
+                console.error("checkFeedbackStatusForDistributor: Error occurred:", err);
+                // IMPORTANT: Return an empty object here too!
+                return {}; // Ensures feedbackStatuses will always be defined, even if empty
+            }
         }
-
-
-         // Helper function to fetch feedback for the distributor's orders
-        async function checkFeedbackStatusForDistributor(orderIds) {
-             if (!orderIds || orderIds.length === 0) return {};
-             try {
-                 // Fetch all feedbacks - Inefficient for large scale.
-                 // Ideally, backend provides feedback linked to orders directly.
-                 const res = await fetch('/api/feedback/all');
-                 const data = await res.json();
-                 const feedbackMap = {};
-                 if (data.feedbacks) {
-                     data.feedbacks.forEach(fb => {
-                        // Store the entire feedback object keyed by orderId
-                        if (orderIds.includes(fb.orderId)) {
-                             feedbackMap[fb.orderId] = fb;
-                        }
-                     });
-                 }
-                 return feedbackMap; // Returns a map where keys are orderIds and values are feedback objects or undefined
-             } catch (err) {
-                 console.error("Error checking feedback status:", err);
-                 return {}; // Return empty map on error
-             }
-         }
 
 
       // Placeholder function for editing donations
