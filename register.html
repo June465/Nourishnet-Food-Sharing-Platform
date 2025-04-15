@@ -5,19 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register - NourishNet</title>
-    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="css/register.css" />
-    <link rel="stylesheet" href="css/style.css"> <!-- Include for potential shared styles -->
+    <link rel="stylesheet" href="css/style.css"> 
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
   </head>
-  <body>
-    <!-- Header -->
+  <body><!-- Header -->
     <section class="header">
       <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
       <nav class="navbar">
-        <!-- Nav updated by auth.js -->
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="donations.html">Donations</a>
@@ -26,19 +23,16 @@
       </nav>
       <div id="menu-btn" class="fas fa-bars"></div>
     </section>
-
     <!-- Heading -->
     <div class="heading" style="background: url(images/header-register.jpg) no-repeat center/cover">
       <h1>REGISTER</h1>
     </div>
-
     <!-- Registration Section -->
     <section class="registration">
       <h1 class="heading-title" style="font-size: 40px;">Create Your Account</h1>
       <div class="registration-container">
         <div class="registration-box">
           <h2>Registration Details</h2>
-          <!-- Removed action and method, will handle via JS -->
           <form id="register-form">
             <div class="inputBox">
               <span>Name <span style="color:red">*</span></span>
@@ -52,7 +46,6 @@
               <span>Contact (Phone or Address) <span style="color:red">*</span></span>
               <input type="text" name="contact" placeholder="Enter phone number or full address" required />
             </div>
-            <!-- Role selection -->
             <div class="inputBox">
               <span>Register As <span style="color:red">*</span></span>
               <select name="role" required>
@@ -61,15 +54,12 @@
                 <option value="distributor">Distributor (Donating Food)</option>
               </select>
             </div>
-            <!-- Additional fields container -->
             <div id="additional-fields">
-                 <!-- Content added dynamically by JS -->
             </div>
             <div class="inputBox">
               <span>Password <span style="color:red">*</span></span>
               <input type="password" name="password" placeholder="Choose a secure password" required minlength="6" />
             </div>
-            <!-- Message area -->
             <div id="register-message" style="margin-top: 15px; font-weight: bold;"></div>
             <input type="submit" value="Register" class="btn" />
           </form>
@@ -77,7 +67,6 @@
         </div>
       </div>
     </section>
-
     <!-- Social Section -->
     <section class="social-section">
       <h2>Be part of our mission</h2>
@@ -103,7 +92,6 @@
         </div>
       </div>
     </section>
-
     <!-- Footer Section -->
     <footer class="footer">
       <div class="footer-container">
@@ -138,21 +126,14 @@
         <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
       </div>
     </footer>
-
-
-    <!-- FontAwesome CDN for Icons -->
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-    <!-- Link Auth JS -->
     <script src="js/auth.js"></script>
     <script>
-      // Dynamically add additional fields based on role selection
       const roleSelect = document.querySelector('select[name="role"]');
       const additionalFieldsDiv = document.getElementById('additional-fields');
-
       roleSelect.addEventListener('change', function () {
-        additionalFieldsDiv.innerHTML = ''; // Clear previous fields
+        additionalFieldsDiv.innerHTML = ''; 
         if (this.value === 'distributor') {
-          // Fields for Distributor
           const categoriesDiv = document.createElement('div');
           categoriesDiv.className = 'inputBox';
           categoriesDiv.innerHTML = `
@@ -162,7 +143,6 @@
           additionalFieldsDiv.appendChild(categoriesDiv);
 
         } else if (this.value === 'collector') {
-          // Fields for Collector
           const regionDiv = document.createElement('div');
           regionDiv.className = 'inputBox';
           regionDiv.innerHTML = `
@@ -180,13 +160,10 @@
           additionalFieldsDiv.appendChild(requirementsDiv);
         }
       });
-
-      // Add event listener to the form to call registerUser from auth.js
       const registerForm = document.getElementById('register-form');
       if(registerForm) {
-           registerForm.addEventListener('submit', registerUser); // registerUser is defined in auth.js
+           registerForm.addEventListener('submit', registerUser); 
       }
-
     </script>
   </body>
 </html>

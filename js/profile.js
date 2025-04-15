@@ -1,22 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
-  // Protect the page - redirect if not logged in
-  if (!user || !user._id) { // Check for user and an ID (_id from mongo)
+  if (!user || !user._id) { 
       alert('Please login to view your profile.');
       window.location.href = 'login.html';
       return;
   }
 
-  // Populate profile details
   populateProfileData(user);
 
-  // Hide/show role-specific sections
   setupRoleSpecificUI(user.role);
 
 });
 
-// Function to populate user data into the display elements
 function populateProfileData(user) {
   document.getElementById('username-display').innerText = user.name || 'User';
   document.getElementById('detail-name').innerText = user.name || 'N/A';
@@ -24,7 +20,6 @@ function populateProfileData(user) {
   document.getElementById('detail-contact').innerText = user.contact || 'N/A';
   document.getElementById('detail-role').innerText = user.role || 'N/A';
 
-  // Populate role-specific fields if they exist in the user object
   if (user.role === 'distributor') {
       document.getElementById('detail-categories').innerText = user.categories || 'Not Specified';
   } else if (user.role === 'collector') {
@@ -33,35 +28,30 @@ function populateProfileData(user) {
   }
 }
 
-// Function to show/hide elements based on user role
 function setupRoleSpecificUI(role) {
   const distributorElements = document.querySelectorAll('.distributor-only');
   const collectorElements = document.querySelectorAll('.collector-only');
 
   if (role === 'distributor') {
-      distributorElements.forEach(el => el.style.display = 'block'); // Show distributor fields
-      collectorElements.forEach(el => el.style.display = 'none'); // Hide collector fields
+      distributorElements.forEach(el => el.style.display = 'block'); 
+      collectorElements.forEach(el => el.style.display = 'none'); 
   } else if (role === 'collector') {
-      distributorElements.forEach(el => el.style.display = 'none'); // Hide distributor fields
-      collectorElements.forEach(el => el.style.display = 'block'); // Show collector fields
+      distributorElements.forEach(el => el.style.display = 'none');
+      collectorElements.forEach(el => el.style.display = 'block'); 
   } else {
-      // Hide both if role is somehow invalid or not set
       distributorElements.forEach(el => el.style.display = 'none');
       collectorElements.forEach(el => el.style.display = 'none');
   }
 }
 
-// Function to toggle the visibility of the edit profile form
 function toggleEditProfile() {
   const editFormDiv = document.getElementById('edit-profile-form');
   const detailsDiv = document.getElementById('user-details');
   const toggleButton = document.getElementById('edit-profile-toggle-btn');
 
   if (editFormDiv.style.display === 'none' || !editFormDiv.style.display) {
-      // Show the form, hide details
       const user = JSON.parse(localStorage.getItem('user'));
-      if (!user) return; // Should not happen if page loaded correctly
-
+      if (!user) return; 
       // Pre-populate the form with current data
       document.getElementById('edit-name').value = user.name || '';
       document.getElementById('edit-email').value = user.email || '';
@@ -69,27 +59,24 @@ function toggleEditProfile() {
       // Pre-populate role-specific fields
        if (user.role === 'distributor') {
           document.getElementById('edit-categories').value = user.categories || '';
-           document.getElementById('edit-categories').required = true; // Make required when visible
+           document.getElementById('edit-categories').required = true; 
        } else if (user.role === 'collector') {
           document.getElementById('edit-region').value = user.region || '';
           document.getElementById('edit-requirements').value = user.requirements || '';
-           document.getElementById('edit-region').required = true; // Make required when visible
-           document.getElementById('edit-requirements').required = true; // Make required when visible
+           document.getElementById('edit-region').required = true; 
+           document.getElementById('edit-requirements').required = true; 
        }
 
-
       editFormDiv.style.display = 'block';
-      detailsDiv.style.display = 'none'; // Hide the display section
-      toggleButton.style.display = 'none'; // Hide the edit button itself
+      detailsDiv.style.display = 'none'; 
+      toggleButton.style.display = 'none'; 
   } else {
-      // Hide the form, show details
       editFormDiv.style.display = 'none';
-      detailsDiv.style.display = 'block'; // Show the display section
-       toggleButton.style.display = 'inline-block'; // Show the edit button again
+      detailsDiv.style.display = 'block'; 
+       toggleButton.style.display = 'inline-block'; 
   }
 }
 
-// Function to submit profile edits
 async function submitProfileEdits(e) {
   e.preventDefault();
   const user = JSON.parse(localStorage.getItem('user'));
@@ -107,12 +94,10 @@ async function submitProfileEdits(e) {
       name: document.getElementById('edit-name').value.trim(),
       email: document.getElementById('edit-email').value.trim(),
       contact: document.getElementById('edit-contact').value.trim(),
-      // Include role-specific data based on user's role
       ...(user.role === 'distributor' && { categories: document.getElementById('edit-categories').value.trim() }),
       ...(user.role === 'collector' && { region: document.getElementById('edit-region').value.trim() }),
       ...(user.role === 'collector' && { requirements: document.getElementById('edit-requirements').value.trim() }),
   };
-
    // Basic validation
    if (!updatedData.name || !updatedData.email || !updatedData.contact) {
        messageDiv.textContent = 'Error: Name, Email, and Contact are required.';
@@ -141,20 +126,16 @@ async function submitProfileEdits(e) {
       const result = await response.json();
 
       if (result.success) {
-          // Update localStorage with the new user data
           localStorage.setItem('user', JSON.stringify(result.user));
 
-          // Update the UI with the new data
           populateProfileData(result.user);
-           updateNavbar(); // Update name in navbar if changed
+           updateNavbar(); 
 
           messageDiv.textContent = 'Profile updated successfully!';
           messageDiv.style.color = 'green';
 
-          // Hide the edit form and show the details view
           toggleEditProfile();
 
-           // Clear message after a few seconds
            setTimeout(() => { messageDiv.textContent = ''; }, 5000);
 
       } else {
@@ -168,7 +149,6 @@ async function submitProfileEdits(e) {
   }
 }
 
-// Function to handle password change
 async function changePassword(e) {
   e.preventDefault();
   const user = JSON.parse(localStorage.getItem('user'));
@@ -186,7 +166,6 @@ async function changePassword(e) {
   const oldPassword = document.getElementById('old-password').value;
   const newPassword = document.getElementById('new-password').value;
   const confirmNewPassword = document.getElementById('confirm-new-password').value;
-
   // Basic validation
   if (!oldPassword || !newPassword || !confirmNewPassword) {
       messageDiv.textContent = 'Error: Please fill in all password fields.';
@@ -225,8 +204,7 @@ async function changePassword(e) {
       if (result.success) {
           messageDiv.textContent = 'Password changed successfully!';
           messageDiv.style.color = 'green';
-          form.reset(); // Clear the password fields
-           // Clear message after a few seconds
+          form.reset(); 
            setTimeout(() => { messageDiv.textContent = ''; }, 5000);
       } else {
           messageDiv.textContent = `Error: ${result.message || 'Failed to change password.'}`;

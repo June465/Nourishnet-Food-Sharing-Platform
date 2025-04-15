@@ -1,35 +1,33 @@
-/* Feedback Overlay Specific Styles */
 .feedback-overlay-content {
   background: #fff;
-  padding: 2rem 3rem; /* More padding */
+  padding: 2rem 3rem; 
   border-radius: 10px;
   width: 90%;
-  max-width: 700px; /* Wider for better display */
-  position: relative; /* For close button positioning */
+  max-width: 700px;
+  position: relative; 
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
-  max-height: 80vh; /* Limit height */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack elements vertically */
+  max-height: 80vh; 
+  display: flex; 
+  flex-direction: column; 
 }
 
 .feedback-overlay-content h2 {
   margin-bottom: 1.5rem;
-  font-size: 1.8rem; /* Slightly larger title */
+  font-size: 1.8rem; 
   color: #333;
-  border-bottom: 1px solid #eee; /* Add a separator */
+  border-bottom: 1px solid #eee;
   padding-bottom: 1rem;
 }
 
-/* Style the close button (top right) */
 .feedback-overlay-content .close-btn {
   position: absolute;
   top: 1rem;
   right: 1.5rem;
-  font-size: 2.5rem; /* Larger close icon */
+  font-size: 2.5rem;
   color: #aaa;
   cursor: pointer;
-  line-height: 1; /* Prevent extra spacing */
+  line-height: 1; 
   transition: color 0.3s ease;
 }
 
@@ -37,16 +35,14 @@
   color: #555;
 }
 
-/* Container for scrollable feedback items */
 .feedback-scroll-container {
-  overflow-y: auto; /* Enable vertical scrolling */
-  flex-grow: 1; /* Allow this section to take available space */
-  margin-bottom: 1rem; /* Space before bottom button */
-  padding-right: 10px; /* Prevent scrollbar overlap */
-  text-align: left; /* Align items left */
+  overflow-y: auto; 
+  flex-grow: 1; 
+  margin-bottom: 1rem; 
+  padding-right: 10px; 
+  text-align: left; 
 }
 
-/* Individual Feedback Item Styling */
 #feedback-items {
   width: 100%;
 }
@@ -83,48 +79,44 @@
 }
 
 .feedback-comment {
-  font-size: 1rem; /* Standard text size */
+  font-size: 12px; 
   color: #333;
   line-height: 1.5;
-  margin-bottom: 0.5rem;
+  margin-bottom: 5px;
 }
 
 .feedback-timestamp {
-  font-size: 0.8rem;
+  font-size: 8px;
   color: #888;
-  display: block; /* Put timestamp on its own line */
-  text-align: right; /* Align timestamp to the right */
+  display: block; 
+  text-align: right; 
 }
 
-/* Style the bottom close button */
 .close-btn-bottom {
-  margin-top: 1rem; /* Add space above the button */
-  width: auto; /* Don't make it full width */
-  padding: 10px 25px; /* Adjust padding */
-  align-self: center; /* Center the button horizontally */
+  margin-top: 1rem; 
+  width: auto; 
+  padding: 10px 25px; 
+  align-self: center; 
 }
 
-/* General overlay styling (copied/adapted from order.css or style.css) */
 .overlay {
 position: fixed;
 top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-background: rgba(0,0,0,0.6); /* Semi-transparent background */
+background: rgba(0,0,0,0.6); 
 display: flex;
 justify-content: center;
 align-items: center;
-z-index: 1000; /* Ensure it's on top */
-font-family: 'Poppins', sans-serif; /* Match font */
+z-index: 1000; 
+font-family: 'Poppins', sans-serif; 
 }
 
-/* Hide scrollbar for the body when overlay is active (optional) */
 body.overlay-active {
 overflow: hidden;
 }
 
-/* Scrollbar styling for the feedback container */
 .feedback-scroll-container::-webkit-scrollbar {
 width: 8px;
 }

@@ -1,17 +1,14 @@
-/* profile.css - Styles for the User Profile Page */
-
 .profile-page {
     padding: 3rem 5%;
 }
 
-/* Reuse dashboard section styling for the main container */
 .profile-container {
-    max-width: 800px; /* Limit width for better readability */
-    margin: 0 auto; /* Center the container */
+    max-width: 800px; 
+    margin: 0 auto; 
 }
 
 .profile-container h2 {
-    font-size: 2rem;
+    font-size: 35px;
     margin-bottom: 1.5rem;
     text-align: center;
 }
@@ -26,7 +23,7 @@
 }
 
 .user-details-display h3 {
-    font-size: 1.4rem;
+    font-size: 18px;
     color: #444;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
@@ -39,43 +36,42 @@
 }
 
 .user-details-display p {
-    font-size: 1rem;
+    font-size: 15px;
     line-height: 1.7;
     color: #555;
     margin-bottom: 0.8rem;
-    display: flex; /* Align label and value */
+    display: flex; 
 }
 
 .user-details-display p strong {
     font-weight: 600;
     color: #333;
-    min-width: 180px; /* Adjust as needed for alignment */
+    min-width: 180px; 
     display: inline-block;
 }
 
 .user-details-display span {
-    color: #555; /* Ensure value text color */
+    color: #555; 
 }
 
 .edit-profile-btn {
     margin-top: 1.5rem;
-    display: inline-block; /* Fit content */
-    width: auto; /* Override default full width */
+    display: inline-block; 
+    width: auto; 
     padding: 10px 20px;
-    font-size: 0.95rem;
+    font-size: 12px;
 }
 
 .edit-profile-btn i {
     margin-right: 8px;
 }
 
-/* Edit Profile Form Section */
 .edit-profile-section {
     border: 1px solid #ddd;
     padding: 2rem;
     border-radius: 6px;
     background-color: #fff;
-    margin-top: 1rem; /* Add space if it follows the display section directly */
+    margin-top: 1rem; 
 }
 
 .edit-profile-section h3 {
@@ -97,7 +93,7 @@
     display: block;
     font-weight: 600;
     margin-bottom: 6px;
-    font-size: 0.95rem;
+    font-size: 12px;
     color: #444;
 }
 
@@ -107,44 +103,42 @@
     padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 12px;
 }
 
 .edit-profile-section .form-actions {
     margin-top: 1.5rem;
     display: flex;
-    gap: 1rem; /* Space between buttons */
+    gap: 1rem; 
 }
 
 .edit-profile-section .form-actions .btn {
-    width: auto; /* Fit content */
+    width: auto; 
     padding: 10px 25px;
-    font-size: 1rem;
+    font-size: 12px;
 }
 
 .edit-profile-section .form-actions .save-btn {
     background-color: var(--main-color, #27ae60);
 }
 .edit-profile-section .form-actions .save-btn:hover {
-    background-color: #229954; /* Darker green */
+    background-color: #229954; 
 }
 
 .edit-profile-section .form-actions .cancel-btn {
-    background-color: #6c757d; /* Grey */
+    background-color: #6c757d; 
 }
 .edit-profile-section .form-actions .cancel-btn:hover {
-    background-color: #5a6268; /* Darker grey */
+    background-color: #5a6268; 
 }
 
-
-/* Change Password Section */
 .change-password-section {
-    margin-top: 2rem; /* Space after edit section or hr */
+    margin-top: 2rem; 
     padding-top: 1.5rem;
 }
 
 .change-password-section h3 {
-     font-size: 1.4rem;
+     font-size: 15px;
      color: #444;
      margin-bottom: 1.5rem;
 }
@@ -162,7 +156,7 @@
     display: block;
     font-weight: 600;
     margin-bottom: 6px;
-    font-size: 0.95rem;
+    font-size: 14px;
     color: #444;
 }
 
@@ -180,27 +174,25 @@
     padding: 12px;
 }
 
-/* Message Areas */
 #profile-message, #password-message {
     padding: 10px;
     border-radius: 4px;
-    margin-bottom: 1rem; /* Consistent spacing */
+    margin-bottom: 1rem;
     text-align: center;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .profile-container {
         max-width: 100%;
     }
     .user-details-display p strong {
-        min-width: 120px; /* Reduce label width */
+        min-width: 120px; 
     }
     .edit-profile-section .form-actions {
-        flex-direction: column; /* Stack buttons */
+        flex-direction: column; 
     }
     .edit-profile-section .form-actions .btn {
-        width: 100%; /* Full width buttons on mobile */
+        width: 100%; 
     }
 
 }

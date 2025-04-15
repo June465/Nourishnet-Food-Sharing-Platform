@@ -1,4 +1,3 @@
-// Toggle mobile navigation menu
 const menuBtn = document.getElementById('menu-btn');
 const navbar = document.querySelector('.header .navbar');
 
@@ -9,13 +8,11 @@ if(menuBtn) {
   });
 }
 
-// Remove active state from menu on scroll
 window.addEventListener('scroll', () => {
   menuBtn.classList.remove('fa-times');
   navbar.classList.remove('active');
 });
 
-// Initialize Swiper for the home slider
 var swiper = new Swiper(".home-slider", {
   loop: true,
   grabCursor: true,

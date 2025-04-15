@@ -1,7 +1,5 @@
 // File: Web/js/feedback.js
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Only run if on feedback page or overlay
   const feedbackContainer = document.getElementById('feedback-items');
   if (feedbackContainer) {
     fetch('/api/feedback/all')
@@ -17,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         feedbackContainer.innerHTML = html;
         
-        // Add hover effect to feedback items
         const feedbackItems = document.querySelectorAll('.feedback-item');
         feedbackItems.forEach(item => {
           item.addEventListener('mouseover', () => {

@@ -7,15 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-    <!-- Using practice.css renamed or specific donation page CSS -->
-    <link rel="stylesheet" href="css/practice.css" /> <!-- Keep existing link -->
-    <link rel="stylesheet" href="css/style.css" /> <!-- Include for overlay styles, buttons etc -->
-     <link rel="stylesheet" href="css/dashboard.css" /> <!-- Include for donation card styles -->
-     <link rel="stylesheet" href="css/feedback.css" /> <!-- Include for feedback item styles -->
+    <link rel="stylesheet" href="css/practice.css" /> 
+    <link rel="stylesheet" href="css/style.css" /> 
+     <link rel="stylesheet" href="css/dashboard.css" /> 
+     <link rel="stylesheet" href="css/feedback.css" /> 
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
   </head>
   <body>
-    <!-- Navigation Bar -->
     <section class="header">
       <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
       <nav class="navbar">
@@ -29,41 +27,33 @@
       <div id="menu-btn" class="fas fa-bars"></div>
     </section>
 
-    <div class="heading" style="background: url(images/header-food.jpg) no-repeat center/cover"> <!-- Use consistent header image -->
+    <div class="heading" style="background: url(images/header-food.jpg) no-repeat center/cover"> 
         <h1>View Donations</h1>
     </div>
 
 
-    <section class="donations-page"> <!-- Changed class for clarity -->
-
-        <!-- Available Donations Section -->
-        <div class="available-donations-section dashboard-section"> <!-- Re-use dashboard section styling -->
-             <h2 class="heading-title"><i class="fas fa-utensils"></i> Available Donations</h2>
-             <p style="text-align: center; margin-bottom: 1.5rem; color: #555;">Browse current food donations available for collection.</p>
-             <div class="grid-container" id="donations-container"> <!-- Re-use grid from collector dashboard -->
-                 <!-- Donation cards will be loaded dynamically -->
-                 <p>Loading available donations...</p>
-             </div>
-         </div>
-
-
+    <section class="donations-page"> 
+      <!-- Available Donations Section -->
+      <div class="available-donations-section dashboard-section"> 
+        <h2 class="heading-title"><i class="fas fa-utensils"></i> Available Donations</h2>
+        <p style="text-align: center; margin-bottom: 1.5rem; color: #555;">Browse current food donations available for collection.</p>
+        <div class="grid-container" id="donations-container"> 
+            <p>Loading available donations...</p>
+        </div>
+      </div>
       <!-- Past Feedback Section -->
-      <section class="past-feedback dashboard-section"> <!-- Re-use dashboard section styling -->
+      <section class="past-feedback dashboard-section"> 
         <h2><i class="fas fa-comments"></i> Recent Community Feedback</h2>
          <p style="text-align: center; margin-bottom: 1.5rem; color: #555;">See what collectors are saying about recent donations.</p>
-        <div id="feedback-list" class="feedback-scroll-container" style="max-height: 400px;"> <!-- Apply scroll container styles -->
-          <!-- Feedback items loaded dynamically -->
+        <div id="feedback-list" class="feedback-scroll-container" style="max-height: 400px;"> 
            <p>Loading feedback...</p>
         </div>
       </section>
     </section>
-
     <!-- Social Section -->
     <section class="social-section">
       <h2>Be part of our mission</h2>
-      <p>
-        Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.
-      </p>
+      <p>Be part of our mission to reduce food waste and nourish communities in need. Connect with us on these platforms.</p>
       <div class="social-icons">
         <div class="social-item">
           <i class="fab fa-facebook-f facebook-link"></i>
@@ -83,10 +73,8 @@
         </div>
       </div>
     </section>
-
     <!-- Footer Section -->
     <footer class="footer">
-      <!-- Footer content remains the same -->
        <div class="footer-container">
            <div class="footer-left"> 
             <h2 class="brand">NOURISH<span class="highlight">NET</span>
@@ -99,43 +87,34 @@
        <div class="footer-bottom"> <p>Copyright © 2025 NourishNet. All Rights Reserved.</p> </div>
   </footer>
 
-    <!-- Order Overlay (hidden by default) -->
     <div id="order-overlay" class="overlay" style="display: none;">
-         <!-- Content loaded by order.js -->
     </div>
-
-    <!-- FontAwesome CDN for Icons -->
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-    <!-- Custom JS Files -->
-    <script src="js/script.js"></script> <!-- For menu toggle -->
-    <script src="js/auth.js"></script> <!-- For nav updates -->
-    <script src="js/order.js"></script> <!-- For order overlay logic -->
-     <!-- feedback.js might not be needed here if logic is self-contained -->
-    <script src="js/overlay.js"></script> <!-- For potential shared overlay functions -->
+    <script src="js/script.js"></script> 
+    <script src="js/auth.js"></script> 
+    <script src="js/order.js"></script> 
+    <script src="js/overlay.js"></script> 
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // Load active donations
         loadActiveDonations();
-        // Load all past feedback
         loadAllFeedbacks();
       });
 
-      // Function to load ACTIVE donations
       async function loadActiveDonations() {
          const container = document.getElementById('donations-container');
-         const user = JSON.parse(localStorage.getItem('user')); // Check if user is logged in
+         const user = JSON.parse(localStorage.getItem('user')); 
 
          try {
             const res = await fetch('/api/donations/active');
             const data = await res.json();
 
             if (data.donations && data.donations.length > 0) {
-                container.innerHTML = ''; // Clear loading message
+                container.innerHTML = ''; 
                 data.donations.forEach(donation => {
                     const card = document.createElement('div');
-                    card.classList.add('donation-card'); // Use the styled card class
-                    card.id = `donation-card-${donation._id}`; // ID for potential updates via order.js
+                    card.classList.add('donation-card'); 
+                    card.id = `donation-card-${donation._id}`; 
                     card.innerHTML = `
                         <img src="${donation.foodImage || 'images/placeholder-food.png'}" alt="${donation.foodType} donation" class="donation-image"/>
                         <div class="donation-info">
@@ -145,7 +124,7 @@
                              <p><i class="far fa-clock"></i> Pickup: ${donation.pickupTime}</p>
                              <p><i class="far fa-calendar-times"></i> Use By: ${new Date(donation.useBy).toLocaleString()}</p>
                               ${donation.allergy ? `<p><i class="fas fa-exclamation-triangle"></i> Allergens: ${donation.allergy}</p>` : ''}
-                            ${user ? // Only show button if logged in
+                            ${user ? 
                                 `<button class="btn request-btn" onclick="openOrderOverlay('${donation._id}')">Request Donation</button>`
                                 : `<button class="btn request-btn" onclick="window.location.href='login.html'">Login to Request</button>`
                              }
@@ -161,23 +140,16 @@
              container.innerHTML = '<p>Could not load donations. Please try refreshing.</p>';
          }
       }
-
-       // Function to load ALL feedbacks for the public page
       async function loadAllFeedbacks() {
         const feedbackListDiv = document.getElementById('feedback-list');
-        feedbackListDiv.innerHTML = '<p>Loading feedback...</p>'; // Loading message
-
+        feedbackListDiv.innerHTML = '<p>Loading feedback...</p>'; 
         try {
             const response = await fetch('/api/feedback/all');
             const data = await response.json();
-
             if (data.feedbacks && data.feedbacks.length > 0) {
                 let html = '';
-                 // Sort feedbacks by newest first
                 data.feedbacks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
                 data.feedbacks.forEach(item => {
-                    // Using the same structure as the feedback overlay
                     html += `
                         <div class="feedback-item">
                             <div class="feedback-header">
@@ -197,8 +169,6 @@
             feedbackListDiv.innerHTML = '<p>Could not load feedback at this time.</p>';
         }
       }
-
-       // Helper to generate star icons (duplicate from overlay/dashboard for standalone use)
         function generateStars(rating) {
             let stars = '';
             for (let i = 1; i <= 5; i++) {
@@ -206,7 +176,6 @@
             }
             return stars;
         }
-
     </script>
   </body>
 </html>

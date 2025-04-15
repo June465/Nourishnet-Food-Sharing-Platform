@@ -15,9 +15,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 15px;
-    /* Increased padding for more height */
     height: 80px;
-    /* Set explicit height */
 }
 
 .heading {
@@ -35,7 +33,6 @@ body {
     color: #ff6600;
     text-shadow: 2px 2px 8px rgba(255, 102, 0, 0.4);
     transform: scale(1.05);
-    /* Slight zoom effect */
 }
 
 .logo {
@@ -47,7 +44,6 @@ body {
 
 .highlight {
     color: #4a90e2;
-    /* Blue highlight like footer */
 }
 
 .navbar a {
@@ -64,7 +60,6 @@ body {
 
 #menu-btn {
     display: none;
-    /* For mobile menu */
 }
 
 .donations {
@@ -228,8 +223,6 @@ body {
         font-size: 15px;
     }
 }
-
-
 /* Social Section*/
 .social-section {
     text-align: center;

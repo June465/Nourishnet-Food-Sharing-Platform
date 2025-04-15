@@ -9,12 +9,12 @@ const userSchema = new mongoose.Schema({
   email: {
       type: String,
       required: [true, 'Email is required.'],
-      unique: true, // Ensure emails are unique
-      lowercase: true, // Store emails in lowercase
+      unique: true, 
+      lowercase: true, 
       trim: true,
-      match: [/\S+@\S+\.\S+/, 'Please use a valid email address.'] // Basic email format validation
+      match: [/\S+@\S+\.\S+/, 'Please use a valid email address.'] 
   },
-  contact: { // Can be phone or address - consider splitting if needed
+  contact: { 
       type: String,
       required: [true, 'Contact information (phone or address) is required.'],
       trim: true
@@ -22,22 +22,18 @@ const userSchema = new mongoose.Schema({
   role: {
       type: String,
       required: [true, 'User role is required.'],
-      enum: ['collector', 'distributor'] // Restrict roles
+      enum: ['collector', 'distributor'] 
   },
   password: {
       type: String,
       required: [true, 'Password is required.'],
       minlength: [6, 'Password must be at least 6 characters long.']
-      // select: false // Optional: Don't include password in queries by default
   },
-  // Distributor specific field
   categories: {
       type: String,
-      // Make required only if role is 'distributor' using a custom validator or application logic
       required: function() { return this.role === 'distributor'; },
       trim: true
   },
-  // Collector specific fields
   region: {
       type: String,
       required: function() { return this.role === 'collector'; },
@@ -52,13 +48,9 @@ const userSchema = new mongoose.Schema({
       type: Date,
       default: Date.now
   }
-  // Optional: Add fields for password reset token/expiry
-  // passwordResetToken: String,
-  // passwordResetExpires: Date,
+
 });
 
-
-// **IMPORTANT: Add password hashing middleware before saving (using bcryptjs)**
 // userSchema.pre('save', async function(next) {
 //   // Only hash the password if it has been modified (or is new)
 //   if (!this.isModified('password')) return next();

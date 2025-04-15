@@ -9,7 +9,7 @@ async function registerUser(e) {
   const formData = new FormData(form);
   const user = Object.fromEntries(formData.entries());
 
-  // Basic frontend validation (more robust needed)
+  // Basic frontend validation
   if (!user.name || !user.email || !user.contact || !user.role || !user.password) {
       messageDiv.textContent = 'Error: Please fill in all required fields.';
       messageDiv.style.color = 'red';
@@ -32,18 +32,15 @@ async function registerUser(e) {
       if (data.success) {
           messageDiv.textContent = `Success! Welcome, ${data.user.name}! You are registered as a ${data.user.role}. Redirecting...`;
           messageDiv.style.color = 'green';
-          // Store user data in localStorage
           localStorage.setItem('user', JSON.stringify(data.user));
-          // Update navbar immediately
           updateNavbar();
-          // Redirect after a short delay
           setTimeout(() => {
               if (data.user.role === 'collector') {
                   window.location.href = 'collector-dashboard.html';
               } else {
                   window.location.href = 'distributor-dashboard.html';
               }
-          }, 2000); // 2-second delay
+          }, 2000);
 
       } else {
           messageDiv.textContent = `Error: ${data.message || 'Registration failed.'}`;
@@ -55,7 +52,6 @@ async function registerUser(e) {
       messageDiv.style.color = 'red';
   }
 }
-
 // --- LOGIN ---
 async function loginUser() {
   const identifierInput = document.querySelector('#login-form input[name="identifier"]');
@@ -64,7 +60,7 @@ async function loginUser() {
 
   const identifier = identifierInput.value.trim();
   const password = passwordInput.value;
-  messageDiv.textContent = ''; // Clear previous messages
+  messageDiv.textContent = ''; 
 
   if (!identifier || !password) {
       messageDiv.textContent = 'Please enter both identifier and password.';
@@ -85,14 +81,13 @@ async function loginUser() {
 
       if (data.success) {
           localStorage.setItem('user', JSON.stringify(data.user));
-          updateNavbar(); // Update nav immediately
-          // Redirect based on role
+          updateNavbar(); 
           if (data.user.role === 'collector') {
               window.location.href = 'collector-dashboard.html';
           } else if (data.user.role === 'distributor') {
               window.location.href = 'distributor-dashboard.html';
           } else {
-               window.location.href = 'index.html'; // Fallback
+               window.location.href = 'index.html'; 
           }
       } else {
           messageDiv.textContent = data.message || 'Login failed. Please check your credentials.';
@@ -108,18 +103,17 @@ async function loginUser() {
 // --- LOGOUT ---
 function logoutUser() {
   localStorage.removeItem('user');
-  updateNavbar(); // Update nav to show login/register
-  window.location.href = 'index.html'; // Redirect to home
+  updateNavbar(); 
+  window.location.href = 'index.html'; 
 }
 
 // --- NAVBAR UPDATE ---
 function updateNavbar() {
   const user = JSON.parse(localStorage.getItem('user'));
   const navbar = document.querySelector('.header .navbar');
-  if (!navbar) return; // Exit if navbar element doesn't exist
+  if (!navbar) return; 
 
   if (user) {
-      // User is logged in
       const dashboardLink = user.role === 'collector' ? 'collector-dashboard.html' : 'distributor-dashboard.html';
       navbar.innerHTML = `
           <a href="index.html">Home</a>
@@ -128,7 +122,7 @@ function updateNavbar() {
           <a href="${dashboardLink}">Dashboard</a>
           <div class="profile-dropdown">
               <a href="#" class="profile-btn">
-                  <i class="fas fa-user-circle"></i> ${user.name.split(' ')[0]} <!-- Show first name -->
+                  <i class="fas fa-user-circle"></i> ${user.name.split(' ')[0]} 
                   <i class="fas fa-caret-down"></i>
               </a>
               <div class="dropdown-content">
@@ -138,9 +132,8 @@ function updateNavbar() {
               </div>
           </div>
       `;
-      addDropdownListener(); // Add listener for the new dropdown
+      addDropdownListener(); 
   } else {
-      // User is logged out
       navbar.innerHTML = `
           <a href="index.html">Home</a>
           <a href="about.html">About</a>
@@ -150,21 +143,17 @@ function updateNavbar() {
       `;
   }
 }
-
-// Function to add hover listener for profile dropdown
 function addDropdownListener() {
    const dropdown = document.querySelector('.profile-dropdown');
    if (dropdown) {
        const btn = dropdown.querySelector('.profile-btn');
        const content = dropdown.querySelector('.dropdown-content');
 
-      // Toggle on click for mobile/touch friendliness
        btn.addEventListener('click', (event) => {
-           event.preventDefault(); // Prevent default link behavior
+           event.preventDefault(); 
            content.classList.toggle('show');
        });
 
-      // Optional: Close dropdown if clicking outside
        window.addEventListener('click', (event) => {
            if (!dropdown.contains(event.target)) {
                if (content.classList.contains('show')) {
@@ -175,11 +164,9 @@ function addDropdownListener() {
    }
 }
 
-
-// Add CSS for the dropdown dynamically or ensure it's in style.css/index.css
 function addDropdownCSS() {
   const styleId = 'profile-dropdown-styles';
-  if (document.getElementById(styleId)) return; // Style already added
+  if (document.getElementById(styleId)) return; 
 
   const css = `
       .profile-dropdown {
@@ -187,24 +174,24 @@ function addDropdownCSS() {
           display: inline-block;
       }
       .profile-dropdown .profile-btn {
-           display: flex; /* Align icon and text */
+           display: flex;
            align-items: center;
-           gap: 5px; /* Space between name and caret */
+           gap: 5px; 
       }
        .profile-dropdown .profile-btn i.fa-user-circle {
-           font-size: 1.2em; /* Make user icon slightly larger */
+           font-size: 1.2em; 
        }
 
       .profile-dropdown .dropdown-content {
           display: none;
           position: absolute;
-          background-color: #222; /* Dark background to match header */
+          background-color: #222; 
           min-width: 160px;
           box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
           z-index: 100;
-          right: 0; /* Align to the right */
+          right: 0;
           border-radius: 4px;
-          overflow: hidden; /* Ensure rounded corners */
+          overflow: hidden;
       }
       .profile-dropdown .dropdown-content.show {
           display: block;
@@ -213,24 +200,24 @@ function addDropdownCSS() {
           color: white;
           padding: 12px 16px;
           text-decoration: none;
-          display: flex; /* Align icon and text */
+          display: flex;
           align-items: center;
-          gap: 10px; /* Space between icon and text */
-          font-size: 0.95rem; /* Slightly smaller font in dropdown */
-          margin: 0 !important; /* Override general navbar margin */
-          white-space: nowrap; /* Prevent wrapping */
+          gap: 10px;
+          font-size: 12px; 
+          margin: 0 !important;
+          white-space: nowrap;
       }
        .profile-dropdown .dropdown-content a i {
-           width: 15px; /* Align icons */
+           width: 15px;
            text-align: center;
-           color: #aaa; /* Lighter color for icons */
+           color: #aaa;
        }
       .profile-dropdown .dropdown-content a:hover {
-          background-color: #444; /* Hover effect */
-          color: #4a90e2; /* Match navbar hover color */
+          background-color: #444; 
+          color: #4a90e2;
       }
        .profile-dropdown .dropdown-content a:hover i {
-           color: #4a90e2; /* Match icon color on hover */
+           color: #4a90e2; 
        }
   `;
   const style = document.createElement('style');
@@ -239,10 +226,7 @@ function addDropdownCSS() {
   document.head.appendChild(style);
 }
 
-
-// --- INITIALIZATION ---
-// Update navbar when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  addDropdownCSS(); // Add the necessary CSS for the dropdown
-  updateNavbar(); // Update based on current login state
+  addDropdownCSS(); 
+  updateNavbar(); 
 });

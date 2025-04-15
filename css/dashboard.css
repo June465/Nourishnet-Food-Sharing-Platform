@@ -1,8 +1,6 @@
-/* dashboard.css - Specific styles for collector and distributor dashboards */
-
-/* General Dashboard Layout */
+/*Specific styles for collector and distributor dashboards */
 .dashboard {
-    padding: 3rem 5%; /* Consistent padding */
+    padding: 8px 5%; 
 }
 
 .dashboard-title {
@@ -16,7 +14,7 @@
 
 .dashboard-section {
     background: #fff;
-    padding: 2rem;
+    padding: 30px;
     border-radius: 8px;
     margin-bottom: 2.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -24,32 +22,29 @@
 
 .dashboard-section h3 {
     font-size: 1.8rem;
-    color: var(--main-color, #27ae60); /* Use variable from style.css or fallback */
+    color: var(--main-color, #27ae60);
     margin-bottom: 1.5rem;
     border-bottom: 1px solid #f0f0f0;
     padding-bottom: 0.8rem;
 }
 
 .dashboard-section h3 i {
-    margin-right: 10px; /* Space between icon and text */
+    margin-right: 10px; 
 }
 
-/* Grid Container for Donations (Collector Dashboard) */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive 3-column grid */
-    gap: 1.5rem; /* Space between cards */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px; 
 }
 
-/* Donation Card Styling (Collector Dashboard) */
 .donation-card {
     background: #f9f9f9;
-    border: 1px solid #eee;
+    border: 10px solid #eee;
     border-radius: 8px;
-    overflow: hidden; /* Contain image */
+    overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex; /* Use flex for image and info side-by-side */
-    flex-direction: column; /* Stack image and info vertically */
+    flex-direction: column;
 }
 
 .donation-card:hover {
@@ -59,8 +54,8 @@
 
 .donation-card .donation-image {
     width: 100%;
-    height: 300px; /* Fixed height for images */
-    object-fit: cover; /* Cover the area, might crop */
+    height: 400px; 
+    object-fit: cover; 
 }
 
 .donation-card .donation-info {
@@ -85,7 +80,7 @@
 .donation-card .donation-info p i {
     margin-right: 8px;
     color: var(--main-color, #27ae60);
-    width: 15px; /* Align icons */
+    width: 15px; 
     text-align: center;
 }
 
@@ -93,10 +88,9 @@
     width: 100%;
     margin-top: 1rem;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 10px;
 }
 
-/* Prior Orders Section (Collector Dashboard) */
 #order-history {
     margin-top: 1rem;
 }
@@ -110,7 +104,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Wrap on smaller screens */
+    flex-wrap: wrap; 
     gap: 1rem;
 }
 
@@ -119,7 +113,7 @@
 }
 
 .order-history-item p {
-    font-size: 0.95rem;
+    font-size: 14px;
     color: #444;
     margin-bottom: 0.4rem;
     line-height: 1.4;
@@ -127,32 +121,28 @@
 
 .order-history-item p strong {
     color: #222;
-    min-width: 150px; /* Align keys */
+    min-width: 150px; 
     display: inline-block;
 }
 
 .order-history-item .order-actions .feedback-btn {
     padding: 8px 15px;
     font-size: 0.9rem;
-    min-width: 130px; /* Ensure buttons have similar width */
+    min-width: 130px; 
     text-align: center;
 }
 
-/* Distributor Dashboard Form */
-.form-section {
-     /* Inherits styles from .dashboard-section */
-}
 
 .form-section form .inputBox {
-    margin-bottom: 1.5rem; /* More space between fields */
+    margin-bottom: 1.5rem; 
 }
 
 .form-section form .inputBox span {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
     font-weight: 600;
     color: #444;
-    font-size: 1rem;
+    font-size: 15px;
 }
 
 .form-section form .inputBox input[type="text"],
@@ -163,7 +153,7 @@
     padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 12px;
     transition: border-color 0.3s ease;
 }
 .form-section form .inputBox input:focus,
@@ -173,7 +163,7 @@
 }
 
 .form-section form .inputBox input[type="file"] {
-    padding: 5px; /* Less padding for file input */
+    padding: 5px; 
     border: 1px dashed #ccc;
     background-color: #fdfdfd;
 }
@@ -184,23 +174,15 @@
     font-size: 1.1rem;
 }
 
-/* Active Donations & Prior Deliveries (Distributor) */
-.info-section {
-    /* Inherits styles from .dashboard-section */
-}
 
 .active-donations, .prior-deliveries {
-    margin-top: 2rem; /* Space between sub-sections */
+    margin-top: 2rem; 
 }
 
-.info-section h4 { /* Sub-headings */
+.info-section h4 { 
     font-size: 1.5rem;
     color: #555;
     margin-bottom: 1rem;
-}
-
-#active-donations-list, #delivery-history {
-    /* Similar styling to order history items */
 }
 
 .active-donation-item, .delivery-item {
@@ -217,33 +199,33 @@
 }
 
 .active-donation-item p, .delivery-item p {
-     font-size: 0.95rem;
+     font-size: 12px;
      color: #444;
      margin-bottom: 0.4rem;
      line-height: 1.4;
 }
 .active-donation-item p strong, .delivery-item p strong {
      color: #222;
-     min-width: 120px; /* Align keys */
+     min-width: 120px; 
      display: inline-block;
 }
 
-.edit-btn, .view-feedback-btn { /* Buttons in info sections */
+.edit-btn, .view-feedback-btn { 
     padding: 8px 15px;
     font-size: 0.9rem;
-    background-color: #6c757d; /* Greyish button */
+    background-color: #6c757d; 
 }
 .edit-btn:hover, .view-feedback-btn:hover {
     background-color: #5a6268;
 }
 
-.feedback-details { /* Style for showing feedback text */
+.feedback-details { 
     margin-top: 0.5rem;
     padding-left: 1.5rem;
     border-left: 3px solid #eee;
     font-style: italic;
     color: #666;
-    font-size: 0.9rem;
+    font-size: 10px;
 }
 .feedback-details .rating {
     font-style: normal;
@@ -254,7 +236,7 @@
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .grid-container {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust column size */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     }
 
     .donation-card .donation-info h3 {
@@ -265,14 +247,14 @@
     }
 
     .order-history-item, .active-donation-item, .delivery-item {
-        flex-direction: column; /* Stack details and actions */
-        align-items: flex-start; /* Align items left */
+        flex-direction: column; 
+        align-items: flex-start; 
     }
     .order-history-item .order-actions {
-        width: 100%; /* Make button container full width */
+        width: 100%;
         margin-top: 1rem;
     }
      .order-history-item .order-actions .feedback-btn {
-         width: 100%; /* Make button full width */
+         width: 100%;
      }
 }

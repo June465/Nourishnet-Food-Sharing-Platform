@@ -1,4 +1,3 @@
-/* General Reset */
 * {
     margin: 0;
     padding: 0;
@@ -26,9 +25,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 15px;
-    /* Increased padding for more height */
     height: 80px;
-    /* Set explicit height */
 }
 
 
@@ -49,7 +46,6 @@ body {
 
 .highlight {
     color: #4a90e2;
-    /* Blue highlight like footer */
 }
 
 .navbar a {
@@ -66,31 +62,24 @@ body {
 
 #menu-btn {
     display: none;
-    /* For mobile menu */
 }
 
-
-/* HOME SECTION */
 .home {
     margin-top: 60px;
-    /* Reduced margin */
     width: 100%;
     height: 85vh;
-    /* Adjusted height for better fit */
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 }
 
-/*  */
 .swiper-slide {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
-    /* Makes it cover the full screen dynamically */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -120,7 +109,6 @@ body {
     display: inline-block;
     padding: 14px 28px;
     background: #3b82f6;
-    /* Modern Blue */
     color: white;
     border-radius: 8px;
     font-size: 18px;
@@ -132,7 +120,6 @@ body {
 .btn:hover {
     background: #2563eb;
 }
-
 /* SERVICES SECTION */
 .services {
     padding: 80px 5%;
@@ -178,7 +165,6 @@ body {
     margin-top: 12px;
     color: #374151;
 }
-
 /* ABOUT SECTION */
 .home-about {
     display: flex;
@@ -210,7 +196,6 @@ body {
     margin-top: 10px;
     line-height: 1.5;
 }
-
 /* Footer SECTION */
 .footer {
     background-color: #121212;
@@ -285,8 +270,6 @@ body {
     text-decoration: none;
     display: inline-block;
 }
-
-
 /* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .header {
@@ -319,34 +302,28 @@ body {
         text-align: center;
     }
 }
-
 /* HOME OFFER SECTION */
 .home-offer {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 70vh; */
-    /* Reduced height for a more compact look */
+    height: 70vh; 
     background: linear-gradient(to right, #1e3a8a, #2563eb);
     text-align: center;
     padding: 60px 5%;
-    /* Reduced padding */
 }
 
 .home-offer .content {
     background: rgba(0, 0, 0, 0.7);
     padding: 40px;
-    /* Slightly reduced padding for better balance */
     border-radius: 12px;
     max-width: 550px;
-    /* Slightly smaller width */
     color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .home-offer .content h3 {
     font-size: 34px;
-    /* Slightly reduced size */
     font-weight: bold;
     color: #60a5fa;
     margin-bottom: 12px;
@@ -374,7 +351,6 @@ body {
 .home-offer .btn:hover {
     background: #2563eb;
 }
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .home-offer {
@@ -400,8 +376,6 @@ body {
         font-size: 15px;
     }
 }
-
-
 /* Social Section*/
 .social-section {
     text-align: center;

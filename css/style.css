@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
 
 :root {
-  --main-color: #27ae60; /* Green hue for food donation */
+  --main-color: #27ae60; 
   --black: #222;
   --white: #fff;
   --light-black: #777;
@@ -43,11 +43,6 @@ html::-webkit-scrollbar-thumb {
 section {
   padding: 5rem 10%;
 }
-
-p {
-  font-size: small;
-}
-
 /* Heading */
 .heading {
   background: url(images/header-food.jpg) no-repeat center/cover;
@@ -72,9 +67,7 @@ p {
   justify-content: space-between;
   align-items: center;
   padding: 20px 15px;
-  /* Increased padding for more height */
   height: 80px;
-  /* Set explicit height */
 }
 
 
@@ -95,7 +88,6 @@ p {
 
 .highlight {
   color: #4a90e2;
-  /* Blue highlight like footer */
 }
 
 .navbar a {
@@ -112,31 +104,26 @@ p {
 
 #menu-btn {
   display: none;
-  /* For mobile menu */
 }
 
 
 /* HOME SECTION */
 .home {
   margin-top: 60px;
-  /* Reduced margin */
   width: 100%;
   height: 85vh;
-  /* Adjusted height for better fit */
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
-/*  */
 .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100vh;
-  /* Makes it cover the full screen dynamically */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -177,7 +164,6 @@ p {
 .btn:hover {
   background: #2563eb;
 }
-
 /* Swiper Slider */
 .home .swiper-slide {
   min-height: 60rem;
@@ -217,7 +203,6 @@ p {
 .home .swiper-slide .content .btn:hover {
   background: var(--main-color);
 }
-
 /* Services Section */
 .services {
   text-align: center;
@@ -377,13 +362,9 @@ p {
 }
 
 .btn {
-  width: 100%;
   background: var(--black);
   color: var(--white);
-  padding: 1rem;
-  font-size: 1.8rem;
   cursor: pointer;
-  margin-top: 1rem;
   border-radius: 0.3rem;
   transition: background 0.3s ease;
 }
@@ -626,7 +607,6 @@ p {
   }
 }
 
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .home-offer {
@@ -652,7 +632,6 @@ p {
       font-size: 15px;
   }
 }
-
 
 /* Social Section*/
 .social-section {

@@ -5,31 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NourishNet - Login</title>
     <link rel="stylesheet" href="css/login.css" />
-     <!-- Font Awesome for icons if needed -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
   </head>
   <body>
-    <!-- Navigation Bar -->
     <section class="header">
       <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
       <nav class="navbar">
-         <!-- Nav updated by auth.js -->
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="donations.html">Donations</a>
         <a href="register.html">Register</a>
         <a href="login.html">Login</a>
       </nav>
-       <!-- Mobile menu button if needed -->
        <div id="menu-btn" class="fas fa-bars" style="color: white;"></div>
     </section>
 
-    <!-- Login Form Container -->
     <div class="login-container">
       <h2>🌱 Welcome Back!</h2>
-      <p>Login to manage donations and requests.</p>
-      <!-- Social buttons removed as per backend logic focus -->
+      <p>Login to manage donations and requests.</p> 
       <!--
       <div class="social-buttons">
         <button class="google-btn">Continue with Google</button>
@@ -38,7 +32,6 @@
       <p class="divider">OR</p>
        -->
       <p>Login using your registered Email or Contact Number.</p>
-       <!-- Added form element for better structure, though JS handles submit -->
       <form id="login-form" onsubmit="event.preventDefault(); loginUser();">
             <div class="input-group">
                 <input type="text" name="identifier" placeholder="Enter your email or contact number" required />
@@ -46,7 +39,6 @@
             <div class="input-group">
                 <input type="password" name="password" placeholder="Enter your password" required />
             </div>
-             <!-- Message area for login errors -->
             <div id="login-message" style="margin-bottom: 15px; color: red; font-weight: bold;"></div>
             <button type="submit" class="login-btn">Login</button>
       </form>
@@ -58,11 +50,8 @@
       </p>
     </div>
 
-    <!-- Link Auth JS -->
     <script src="js/auth.js"></script>
-
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script> 
-    <!-- Optional: Link script.js if menu button needs it -->
     <script src="js/script.js"></script>
   </body>
 </html>

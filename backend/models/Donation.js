@@ -36,30 +36,17 @@ const donationSchema = new mongoose.Schema({
   useBy: {
       type: Date,
       required: [true, 'Use-by date and time are required.'],
-      index: true // Index for efficient querying of active donations
+      index: true 
   },
   foodImage: {
-      type: String, // Store the URL path to the image
+      type: String, 
       required: [true, 'Food image is required.']
   },
   createdAt: {
       type: Date,
       default: Date.now
   },
-  // Optional: Track status (e.g., 'active', 'fully_claimed', 'expired', 'deleted')
-  // status: {
-  //     type: String,
-  //     enum: ['active', 'claimed', 'expired', 'deleted'],
-  //     default: 'active'
-  // }
 });
 
-// Optional: Automatically update status based on date/quantity (more advanced)
-// donationSchema.pre('save', function(next) {
-//   if (this.useBy < new Date() || this.quantity <= 0) {
-//     // Mark as expired or claimed - needs careful handling during updates
-//   }
-//   next();
-// });
 
 module.exports = mongoose.model('Donation', donationSchema);

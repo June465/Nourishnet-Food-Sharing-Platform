@@ -1,6 +1,4 @@
-// Open the order request overlay for a given donationId
 async function openOrderOverlay(donationId) {
-  // 1. Check if user is logged in AND is a collector
   const user = JSON.parse(localStorage.getItem('user'));
   if (!user) {
       alert('Please log in to request a donation.');
@@ -12,7 +10,6 @@ async function openOrderOverlay(donationId) {
        return;
    }
 
-  // 2. Get the overlay container element
   const overlayDiv = document.getElementById('order-overlay');
   if (!overlayDiv) {
       console.error("Order overlay container not found!");
@@ -20,11 +17,10 @@ async function openOrderOverlay(donationId) {
   }
 
   overlayDiv.innerHTML = '<p style="color:white; text-align:center; padding:20px;">Loading donation details...</p>';
-  overlayDiv.style.display = 'flex'; // Show loading state
-  document.body.classList.add('overlay-active'); // Optional: Disable body scroll
+  overlayDiv.style.display = 'flex'; 
+  document.body.classList.add('overlay-active'); 
 
   try {
-      // 3. Fetch donation details from the backend API
       const donationResponse = await fetch('/api/donations/' + donationId);
       if (!donationResponse.ok) throw new Error(`Failed to fetch donation details (Status: ${donationResponse.status})`);
       const donationData = await donationResponse.json();
@@ -34,7 +30,6 @@ async function openOrderOverlay(donationId) {
       }
       const donation = donationData.donation;
 
-       // Check if donation quantity is zero before showing form
        if (donation.quantity <= 0) {
            overlayDiv.innerHTML = `
                <div class="order-modal" style="background:white; padding:2rem; border-radius:8px; text-align:center;">
@@ -43,12 +38,9 @@ async function openOrderOverlay(donationId) {
                    <p>Sorry, all servings for this donation have already been requested.</p>
                    <button class="btn" onclick="closeOrderOverlay()">Close</button>
                </div>`;
-           return; // Stop execution
+           return;
        }
 
-
-      // 4. Load the order.html structure (assuming it contains the form skeleton)
-      // We'll inject the details into this structure.
       const orderFormHtml = `
           <div class="order-modal">
               <span class="close-btn" onclick="closeOrderOverlay()">&times;</span>
@@ -79,13 +71,11 @@ async function openOrderOverlay(donationId) {
           </div>
       `;
 
-      // Inject the form HTML into the overlay
       overlayDiv.innerHTML = orderFormHtml;
-      // Apply necessary CSS or ensure order.css is loaded/included
       const styleLink = document.createElement('link');
       styleLink.rel = 'stylesheet';
-      styleLink.href = 'css/order.css'; // Assuming order overlay styles are here
-      document.head.appendChild(styleLink); // Append styles if not globally loaded
+      styleLink.href = 'css/order.css'; 
+      document.head.appendChild(styleLink); 
 
 
   } catch (err) {
@@ -94,46 +84,40 @@ async function openOrderOverlay(donationId) {
   }
 }
 
-// Close the order overlay
 function closeOrderOverlay() {
   const overlay = document.getElementById('order-overlay');
   if (overlay) {
       overlay.style.display = 'none';
-      overlay.innerHTML = ''; // Clear content
+      overlay.innerHTML = ''; 
   }
-  document.body.classList.remove('overlay-active'); // Re-enable body scroll
+  document.body.classList.remove('overlay-active'); 
 }
 
-// Submit the order request
 async function submitOrder(event) {
   event.preventDefault();
   const form = event.target;
   const summaryDiv = document.getElementById('order-summary');
   const errorDiv = document.getElementById('order-error-message');
   const submitButton = form.querySelector('input[type="submit"]');
-  errorDiv.textContent = ''; // Clear previous errors
-  summaryDiv.classList.add('hidden'); // Hide previous summary
+  errorDiv.textContent = ''; 
+  summaryDiv.classList.add('hidden'); 
 
   const orderData = {
       itemCount: parseInt(form.itemCount.value),
       donationId: form.donationId.value,
-      collector: null // Will be filled from localStorage
+      collector: null 
   };
 
-   // Basic validation
    if (isNaN(orderData.itemCount) || orderData.itemCount <= 0) {
        errorDiv.textContent = 'Please enter a valid quantity greater than 0.';
        return;
    }
-   // Check against available quantity again (though max attribute helps)
    const availableServings = parseInt(document.getElementById('overlay-servings')?.textContent || '0');
    if (orderData.itemCount > availableServings) {
         errorDiv.textContent = `Cannot request more than the available ${availableServings} servings.`;
         return;
    }
 
-
-  // Get collector ID from localStorage
   const user = JSON.parse(localStorage.getItem('user'));
   if (!user || !user._id) {
       errorDiv.textContent = 'Error: Could not identify collector. Please log in again.';
@@ -161,16 +145,13 @@ async function submitOrder(event) {
               <p>Remaining servings for this donation: ${data.updatedDonation.quantity}</p>
           `;
           summaryDiv.classList.remove('hidden');
-          form.style.display = 'none'; // Hide the form
-
-          // Update the quantity on the main page/dashboard card if it exists
+          form.style.display = 'none'; 
           const donationCard = document.getElementById(`donation-card-${orderData.donationId}`);
           if (donationCard) {
               const quantitySpan = donationCard.querySelector('.donation-quantity');
               if (quantitySpan) {
                   quantitySpan.textContent = data.updatedDonation.quantity;
               }
-              // Optionally hide or disable the request button on the card if quantity is now 0
               if (data.updatedDonation.quantity <= 0) {
                    const requestButton = donationCard.querySelector('.request-btn');
                    if (requestButton) {
@@ -181,7 +162,6 @@ async function submitOrder(event) {
                    }
                }
           }
-           // Optionally close overlay after delay
            // setTimeout(closeOrderOverlay, 4000);
 
       } else {

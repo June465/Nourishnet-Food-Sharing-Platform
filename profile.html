@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Your Profile - NourishNet</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/profile.css"/> <!-- Add specific profile CSS -->
+    <link rel="stylesheet" href="css/profile.css"/> 
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.jpg" />
   </head>
   <body>
@@ -16,7 +16,6 @@
     <section class="header">
       <a href="index.html" class="logo">NOURISH<span class="highlight">NET</span></a>
       <nav class="navbar">
-        <!-- These links are replaced by auth.js if user is logged in -->
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="donations.html">Donations</a>
@@ -25,26 +24,21 @@
       </nav>
       <div id="menu-btn" class="fas fa-bars"></div>
     </section>
-
-    <!-- Heading -->
-    <div class="heading" style="background: url(images/header-profile.jpg) no-repeat center/cover"> <!-- Choose a suitable profile header image -->
+    <div class="heading" style="background: url(images/header-profile.jpg) no-repeat center/cover"> 
         <h1>Your Profile</h1>
     </div>
-
     <section class="profile-page">
-        <div class="profile-container dashboard-section"> <!-- Re-use dashboard section styling -->
+        <div class="profile-container dashboard-section"> 
             <h2>Welcome, <span id="username-display" style="color: var(--main-color);">User</span>!</h2>
             <p>Manage your NourishNet account details below.</p>
             <div id="profile-message" style="margin: 10px 0; font-weight: bold;"></div>
 
-             <!-- User Details Display -->
              <div id="user-details" class="user-details-display">
                  <h3><i class="fas fa-user-circle"></i> Your Information</h3>
                  <p><strong>Name:</strong> <span id="detail-name">Loading...</span></p>
                  <p><strong>Email:</strong> <span id="detail-email">Loading...</span></p>
                  <p><strong>Contact:</strong> <span id="detail-contact">Loading...</span></p>
                  <p><strong>Role:</strong> <span id="detail-role" style="text-transform: capitalize;">Loading...</span></p>
-                 <!-- Role-specific details -->
                  <div class="distributor-only" style="display: none;">
                     <p><strong>Donated Categories:</strong> <span id="detail-categories">Loading...</span></p>
                  </div>
@@ -56,9 +50,7 @@
                     <i class="fas fa-edit"></i> Edit Profile
                 </button>
              </div>
-
-
-             <!-- Edit Profile Form (Initially Hidden) -->
+             <!-- Edit Profile Form -->
              <div id="edit-profile-form" class="edit-profile-section" style="display: none;">
                  <h3><i class="fas fa-pencil-alt"></i> Edit Your Information</h3>
                  <form onsubmit="submitProfileEdits(event)">
@@ -96,7 +88,6 @@
              </div>
 
              <hr style="margin: 2rem 0; border-top: 1px solid #eee;"/>
-
              <!-- Change Password Section -->
              <div class="change-password-section">
                  <h3><i class="fas fa-key"></i> Change Password</h3>
@@ -122,8 +113,6 @@
              </div>
          </div>
      </section>
-
-
     <!-- Social Section -->
     <section class="social-section">
       <h2>Be part of our mission</h2>
@@ -149,7 +138,6 @@
         </div>
       </div>
     </section>
-
     <!-- Footer Section -->
     <footer class="footer">
       <div class="footer-container">
@@ -184,10 +172,10 @@
         <p>Copyright © 2025 NourishNet. All Rights Reserved.</p>
       </div>
     </footer>
-
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script> 
-    <script src="js/script.js"></script> <!-- For menu -->
-    <script src="js/auth.js"></script> <!-- For nav and user info -->
-    <script src="js/profile.js"></script> <!-- Profile specific logic -->
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script> 
+    <script src="js/auth.js"></script> 
+    <script src="js/profile.js"></script> 
   </body>
 </html>

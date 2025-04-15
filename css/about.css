@@ -30,9 +30,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 15px;
-    /* Increased padding for more height */
     height: 80px;
-    /* Set explicit height */
 }
 
 
@@ -53,7 +51,6 @@ body {
 
 .highlight {
     color: #4a90e2;
-    /* Blue highlight like footer */
 }
 
 .navbar a {
@@ -70,7 +67,6 @@ body {
 
 #menu-btn {
     display: none;
-    /* For mobile menu */
 }
 
 /* Mobile Menu */
@@ -119,7 +115,6 @@ body {
     color: #ff6600;
     text-shadow: 2px 2px 8px rgba(255, 102, 0, 0.4);
     transform: scale(1.05);
-    /* Slight zoom effect */
 }
 
 
@@ -130,17 +125,14 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     gap: 15px;
-    /* Further reduced gap */
     padding-left: 80px;
     padding-right: 80px;
-    /* Adjusted padding */
 }
 
 .about .image-container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    /* Reduced spacing between images */
     flex: 1;
 }
 
@@ -159,20 +151,17 @@ body {
 .about .content h2,
 .about .content h3 {
     color: #ff6600;
-    /* Same color as About Us hover */
     transition: color 0.3s ease-in-out;
 }
 
 .about .content h2:hover,
 .about .content h3:hover {
     color: #e65100;
-    /* Slightly darker shade on hover */
 }
 
 .about .icons-container {
     display: flex;
     gap: 0.8rem;
-    /* Further reduced gap */
     margin-top: 10px;
 }
 
@@ -190,10 +179,6 @@ body {
     margin-top: 8px;
     font-weight: bold;
 }
-
-
-
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .home-offer {
@@ -219,7 +204,6 @@ body {
         font-size: 15px;
     }
 }
-
 
 /* Social Section*/
 .social-section {
