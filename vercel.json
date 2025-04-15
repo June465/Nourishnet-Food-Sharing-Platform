@@ -1,0 +1,67 @@
+
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "backend/server.js",
+        "use": "@vercel/node"    
+      },
+     
+      {
+        "src": "uploads/**",
+        "use": "@vercel/static"
+      },
+      {
+        "src": "*.html",
+        "use": "@vercel/static"
+      },
+      {
+         "src": "css/**",
+         "use": "@vercel/static"
+      },
+      {
+         "src": "js/**",
+         "use": "@vercel/static"
+      },
+      {
+         "src": "images/**",
+         "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/uploads/(.*)",
+        "dest": "/uploads/$1"
+      },
+      {
+        "handle": "filesystem"
+      },
+      {
+        "src": "/api/(.*)",
+        "dest": "backend/server.js"
+      },
+      { "src": "^/$", "dest": "/index.html" },
+      { "src": "/about", "dest": "/about.html" },
+      { "src": "/donations", "dest": "/donations.html" },
+      { "src": "/register", "dest": "/register.html" },
+      { "src": "/login", "dest": "/login.html" },
+      { "src": "/profile", "dest": "/profile.html" },
+      { "src": "/collector-dashboard", "dest": "/collector-dashboard.html" },
+      { "src": "/distributor-dashboard", "dest": "/distributor-dashboard.html" },
+      { "src": "/forgot-password", "dest": "/forgot-password.html" },
+
+      {
+        "src": "/(.*\\.\\w+)",
+        "dest": "/$1"
+      },
+
+      {
+         "src": "/([^/.]+)",
+         "dest": "/$1.html"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "backend/server.js"
+      }
+    ]
+  }
