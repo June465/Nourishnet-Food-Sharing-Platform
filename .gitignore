@@ -2,3 +2,6 @@ database user
 nourishnet:
 NourishNet@2025
 .env
+node_modules/
+.DS_Store
+Thumbs.db
